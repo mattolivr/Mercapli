@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/dashboardFragment" android:title="Página Inicial" android:icon="@drawable/ic_home" />
+    <item android:id="@+id/compraFragment" android:title="Carrinho" android:icon="@drawable/ic_cart" />
+    <item android:id="@+id/listaFragment" android:title="Lista de Compras" android:icon="@drawable/ic_list" />
+    <item android:id="@+id/userFragment" android:title="Perfil" android:icon="@drawable/ic_user" />
+</menu>
