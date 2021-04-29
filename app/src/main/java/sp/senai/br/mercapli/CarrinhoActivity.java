@@ -2,6 +2,8 @@ package sp.senai.br.mercapli;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.database.Cursor;
 import android.os.Bundle;
 
 public class CarrinhoActivity extends AppCompatActivity {
@@ -10,5 +12,18 @@ public class CarrinhoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_carrinho);
+        getSupportActionBar().hide();
+    }
+
+    public void closeActivity(){
+        super.onBackPressed();
+    }
+
+    public void preencherLista(){
+        
+    }
+
+    public void adicionarProduto(){
+
     }
 }

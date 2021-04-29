@@ -9,6 +9,7 @@ public class Compra {
     public static ArrayList<Item> itens = new ArrayList<>();
     private long data;
     private String local;
+    private String titulo;
 
     public Compra (){
         setData();
@@ -44,6 +45,14 @@ public class Compra {
 
     public void setLocal(String local) {
         this.local = local;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
     }
 
     public static String getItens() {
