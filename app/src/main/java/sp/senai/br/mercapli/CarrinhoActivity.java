@@ -59,7 +59,5 @@ public class CarrinhoActivity extends AppCompatActivity {
                 "item_cat"
         };
 
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.layout_produto, )
-
     }
 }
