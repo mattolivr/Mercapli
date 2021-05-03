@@ -50,7 +50,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     public void adicionarProduto(View view) {
         Item newItem = new Item();
-        newItem.setTypeView(PROD_VIEW);
+        newItem.setTypeView(PROD_EDIT);
 
         adapter.addProduto(newItem);
         preencherLista();
