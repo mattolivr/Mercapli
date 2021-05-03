@@ -8,12 +8,18 @@ public class Item {
     private String foto;
     private int quantidade;
     private int id;
+    private int typeView;
 
-    public Item(int id, String nome, Double valor, int quantidade){
+    public Item(int id, String nome, Double valor, int quantidade, int typeView){
         this.setId(id);
         this.setNome(nome);
         this.setValor(valor);
         this.setQuantidade(quantidade);
+        this.setTypeView(typeView);
+    }
+
+    public Item(){
+        this(0, "", 0.0, 0, 0);
     }
 
     public String getNome () {
@@ -62,6 +68,14 @@ public class Item {
 
     public void setFoto(String foto) {
         this.foto = foto;
+    }
+
+    public int getTypeView() {
+        return typeView;
+    }
+
+    public void setTypeView(int typeView) {
+        this.typeView = typeView;
     }
 }
 

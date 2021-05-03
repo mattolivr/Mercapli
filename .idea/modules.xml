@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Mercapli.iml" filepath="$PROJECT_DIR$/.idea/Mercapli.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Mercapli.iml" filepath="$PROJECT_DIR$/.idea/modules/Mercapli.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Mercapli.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Mercapli.app.iml" />
     </modules>
   </component>
