@@ -1,26 +1,17 @@
 package sp.senai.br.mercapli;
 
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.SimpleCursorAdapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Item;
-import sp.senai.br.mercapli.database.CriarBD;
 
 import static sp.senai.br.mercapli.Constant.PROD_EDIT;
-import static sp.senai.br.mercapli.Constant.PROD_VIEW;
 
 public class CarrinhoActivity extends AppCompatActivity {
     RecyclerView rvCompraProdutos;
@@ -49,10 +40,15 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     public void adicionarProduto(View view) {
-        Item newItem = new Item();
-        newItem.setTypeView(PROD_EDIT);
+        if(!adapter.isEditing()){
+            Item newItem = new Item();
+            newItem.setTypeView(PROD_EDIT);
 
-        adapter.addProduto(newItem);
-        preencherLista();
+            adapter.addProduto(newItem);
+            preencherLista();
+        }
+        else{
+            Toast.makeText(this, "Por favor, termine de inserir o produto", Toast.LENGTH_SHORT).show();
+        }
     }
 }

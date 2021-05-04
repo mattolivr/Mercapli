@@ -22,7 +22,6 @@
             android:layout_height="40dp"
             android:layout_weight="0"
             android:background="#00FFFFFF"
-            android:onClick="closeActivity"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back" />
@@ -88,7 +87,8 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvCompraProdutos"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
         </LinearLayout>
     </ScrollView>
 

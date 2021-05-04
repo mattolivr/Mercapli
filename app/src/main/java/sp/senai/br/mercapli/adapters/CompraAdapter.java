@@ -1,14 +1,13 @@
 package sp.senai.br.mercapli.adapters;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.lang.reflect.Array;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,9 +21,11 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
     private List<Item> produtos = new ArrayList<>();
     private Context context;
+    private Boolean editing;
 
     public CompraAdapter(Context context) {
         this.context = context;
+        this.editing = false;
     }
 
     @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,20 +45,42 @@ public class CompraAdapter extends RecyclerView.Adapter {
     @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         CompraViewHolder holder = (CompraViewHolder) viewHolder;
         Item produto = produtos.get(position);
+        produto.setId(position);
 
         switch (produto.getTypeView()){
-            case PROD_VIEW:
+            case PROD_VIEW: // Alterações em modo de visualização
                 holder.nome.setText(produto.getNome());
                 holder.preco.setText(produto.getValor().toString());
                 holder.cat.setText(produto.getCategoria());
                 holder.id.setText("" +produto.getId());
-                holder.qtde.setText("" + produto.getQuantidade());
+                holder.qtde.setText("x" + produto.getQuantidade());
+                holder.precoFinal.setText(NumberFormat.getCurrencyInstance().format(produto.getValorFinal()));
+
                 break;
-            case PROD_EDIT:
+            case PROD_EDIT: // Modo de Edição
+                setEditing(true); // Permitir somente 1 edição por vez
+
+                // Resgatar dados preexistentes
                 holder.nomeE.setText(produto.getNome());
-                holder.precoE.setText(produto.getValor().toString());
+                holder.precoE.setText((produto.getValor() != 0.0)?produto.getValor().toString():"");
                 holder.idE.setText("" + produto.getId());
-                holder.qtdeE.setText("" + produto.getQuantidade());
+                holder.qtdeE.setText((produto.getQuantidade() > 0)?"" + produto.getQuantidade():"");
+
+                // Ouvir ação dos Botões
+                holder.btnPrdEdtAdicionar.setOnClickListener(view -> {
+                    produto.setTypeView(PROD_VIEW);
+
+                    insertDataOnItem(holder, produto);
+
+                    this.notifyItemChanged(position);
+                    this.setEditing(false);
+                });
+
+                holder.btnPrdEdtCancelar.setOnClickListener(view -> {
+                    produtos.remove(position);
+                    this.notifyItemRemoved(position);
+                    this.setEditing(false);
+                });
                 break;
         }
     }
@@ -71,5 +94,25 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
     public void addProduto(Item produto){
         this.produtos.add(produto);
+    }
+
+    public boolean isEditing(){
+        return this.editing;
+    }
+
+    public void setEditing(Boolean editing) {
+        this.editing = editing;
+    }
+
+    private void insertDataOnItem(CompraViewHolder holder, Item produto) {
+        Double dValor = Double.parseDouble(holder.precoE.getText().toString());
+        Integer iQtde = Integer.parseInt(holder.qtdeE.getText().toString());
+
+        produto.setNome(holder.nomeE.getText().toString());
+        produto.setValor(dValor);
+//                    produto.setCategoria(holder.catE.toString());
+        produto.setQuantidade(iQtde);
+
+        produto.setValorFinal(dValor * iQtde);
     }
 }

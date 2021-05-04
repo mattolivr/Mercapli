@@ -9,6 +9,7 @@ public class Item {
     private int quantidade;
     private int id;
     private int typeView;
+    private Double valorFinal;
 
     public Item(int id, String nome, Double valor, int quantidade, int typeView){
         this.setId(id);
@@ -50,7 +51,7 @@ public class Item {
         return id;
     }
 
-    private void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -76,6 +77,14 @@ public class Item {
 
     public void setTypeView(int typeView) {
         this.typeView = typeView;
+    }
+
+    public Double getValorFinal() {
+        return valorFinal;
+    }
+
+    public void setValorFinal(Double valorFinal) {
+        this.valorFinal = valorFinal;
     }
 }
 
