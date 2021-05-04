@@ -33,10 +33,12 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case PROD_VIEW:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto, null);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto, parent, false);
+                view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
                 return new CompraViewHolder(view);
             case PROD_EDIT:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto_edit, null);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto_edit, parent, false);
+                view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
                 return new CompraViewHolder(view);
         }
         return null;
@@ -105,8 +107,8 @@ public class CompraAdapter extends RecyclerView.Adapter {
     }
 
     private void insertDataOnItem(CompraViewHolder holder, Item produto) {
-        Double dValor = Double.parseDouble(holder.precoE.getText().toString());
-        Integer iQtde = Integer.parseInt(holder.qtdeE.getText().toString());
+        Double  dValor = Double.parseDouble(holder.precoE.getText().toString());
+        Integer iQtde  = Integer.parseInt  (holder.qtdeE .getText().toString());
 
         produto.setNome(holder.nomeE.getText().toString());
         produto.setValor(dValor);
