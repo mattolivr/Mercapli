@@ -4,13 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#96c3ec"
     tools:context=".CarrinhoActivity">
 
     <LinearLayout
         android:id="@+id/llHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +25,7 @@
             android:layout_height="40dp"
             android:layout_weight="0"
             android:background="#00FFFFFF"
+            android:onClick="closeActivity"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back" />
@@ -88,7 +92,8 @@
                 android:id="@+id/rvCompraProdutos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp" />
         </LinearLayout>
     </ScrollView>
 
