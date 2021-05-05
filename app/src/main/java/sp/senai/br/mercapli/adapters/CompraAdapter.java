@@ -58,6 +58,16 @@ public class CompraAdapter extends RecyclerView.Adapter {
                 holder.qtde.setText("x" + produto.getQuantidade());
                 holder.precoFinal.setText(NumberFormat.getCurrencyInstance().format(produto.getValorFinal()));
 
+                // Ouvir clique para editar
+                holder.cLayout.setOnClickListener(view -> {
+                    if(!isEditing()){
+                        produto.setTypeView(PROD_EDIT);
+
+                        this.notifyItemChanged(position);
+                        this.setEditing(true);
+                    }
+                });
+
                 break;
             case PROD_EDIT: // Modo de Edição
                 setEditing(true); // Permitir somente 1 edição por vez
@@ -92,6 +102,19 @@ public class CompraAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
         return produtos.get(position).getTypeView();
+    }
+
+    public Double getValorTotal() {
+        Double ValorTotal = 0.0;
+
+        for(int i = 0; i<produtos.size(); i++)
+        {
+            if( produtos.get(i).getValorFinal() != null){
+                ValorTotal += produtos.get(i).getValorFinal();
+            }
+        }
+
+        return ValorTotal;
     }
 
     public void addProduto(Item produto){

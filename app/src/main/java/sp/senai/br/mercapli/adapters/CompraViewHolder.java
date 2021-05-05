@@ -4,11 +4,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import sp.senai.br.mercapli.R;
 
 public class CompraViewHolder extends RecyclerView.ViewHolder {
+    final ConstraintLayout cLayout;
     final TextView nome;
     final TextView preco;
     final TextView qtde;
@@ -26,6 +28,7 @@ public class CompraViewHolder extends RecyclerView.ViewHolder {
 
     public CompraViewHolder(View view) {
         super(view);
+        cLayout = (ConstraintLayout) view.findViewById(R.id.cl_produto_layout);
         nome    = (TextView) view.findViewById(R.id.nome_produto_layout );
         preco   = (TextView) view.findViewById(R.id.preco_produto_layout);
         qtde    = (TextView) view.findViewById(R.id.qtde_produto_layout );
