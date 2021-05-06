@@ -39,4 +39,9 @@ public class CriarBD extends SQLiteOpenHelper {
 
         onCreate(sqLiteDatabase);
     }
+
+    public void reset(SQLiteDatabase sqLiteDatabase) {
+        String where = "_id IS NOT NULL";
+        sqLiteDatabase.delete("compra", where, null);
+    }
 }

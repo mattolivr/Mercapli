@@ -15,6 +15,7 @@ public class CarrinhoDialog extends DialogFragment {
     private Compra compra;
     private SQLiteDatabase database;
 
+
     public CarrinhoDialog (Compra compra, SQLiteDatabase database) {
         this.compra = compra;
         this.database = database;
@@ -25,12 +26,11 @@ public class CarrinhoDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.finalizar_compra)
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
-                    System.out.println("Finalização aceita");
                     compra.finalizarCompra(database);
-                    System.out.println("Finalização completa");
+                    getActivity().finish();
                 })
                 .setNegativeButton(R.string.nao, ((dialogInterface, i) -> {
-                    System.out.println("Finalização negada");
+
                 }));
         return builder.create();
     }

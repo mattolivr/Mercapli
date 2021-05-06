@@ -84,13 +84,8 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     public void finalizarCompra (View view) {
-        System.out.println("Finalizando compra...");
         newCompra.setValorTotal(adapter.getValorTotal());
         newCompra.setItems(adapter.getProdutos());
-
-        System.out.println("Valor total:" + newCompra.getValorTotal());
-        System.out.println("Itens:");
-        for (Item item: adapter.getProdutos()) { System.out.println(item.getNome()); }
 
         DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
         dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");

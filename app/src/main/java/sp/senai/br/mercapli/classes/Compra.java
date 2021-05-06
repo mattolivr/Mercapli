@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.view.View;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -123,13 +124,7 @@ public class Compra {
         dbInsert = database.insert("compra", null, insertValues);
 
         if(dbInsert > 0){
-            System.out.println("Dados inseridos");
-            System.out.println(dbInsert + " linhas afetadas");
-
             this.setId(database);
-            System.out.println("Id da compra: " + this.getId());
-        } else {
-            System.out.println("Erro na inserção");
         }
     }
 
@@ -142,8 +137,12 @@ public class Compra {
 
         cursor = database.query("compra", new String[]{"comp_data"}, "comp_data = "+ this.getData(), null, null, null, null);
 
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
         if(cursor.getCount() == 1){
-            this.id = cursor.getInt(0);
+            this.id = cursor.getInt(cursor.getColumnIndex("comp_data"));
         }
     }
 }
