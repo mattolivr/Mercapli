@@ -7,6 +7,7 @@ public class Item {
     private String categoria;
     private String foto;
     private int quantidade;
+
     private int id;
     private int typeView;
     private Double valorFinal;

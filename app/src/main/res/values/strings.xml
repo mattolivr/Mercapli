@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Mercapli</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sim">Sim</string>
+    <string name="nao">Não</string>
+
+    <!-- DIALOG ALERTS -->
+    <!-- Carrinho -->
+    <string name="finalizar_compra">Deseja Finalizar a Compra?</string>
 </resources>

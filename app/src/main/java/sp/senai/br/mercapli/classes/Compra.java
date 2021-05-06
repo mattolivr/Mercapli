@@ -1,11 +1,21 @@
 package sp.senai.br.mercapli.classes;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
+
+import sp.senai.br.mercapli.database.CriarBD;
 
 public class Compra {
 
     private int id;
-    private Float valorTotal;
+    private Double valorTotal;
     public static ArrayList<Item> itens = new ArrayList<>();
     private long data;
     private String local;
@@ -13,21 +23,16 @@ public class Compra {
 
     public Compra (){
         setData();
+        setValorTotal(0.0);
+        setLocal("");
+        setTitulo("");
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Float getValorTotal() {
+    public double getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(Float valorTotal) {
+    public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
     }
 
@@ -66,8 +71,10 @@ public class Compra {
         return smensagem;
     }
 
-    public void inserirItem (Item item) {
-        this.itens.add(item);
+    public void setItems (List<Item> items) {
+        for (Item item: items) {
+            this.itens.add(item);
+        }
     }
 
     public void alterarItem (int itemId, String itemNome, Double itemValor, Integer itemQtde) {
@@ -103,8 +110,41 @@ public class Compra {
         }
     }
 
-    public void finalizarCompra(){
+    public void finalizarCompra (SQLiteDatabase database) {
+        long dbInsert;
+        String[] campos = {"_id", "comp_local", "comp_titulo", "comp_data", "comp_valTot"};
+        ContentValues insertValues = new ContentValues();
 
+        insertValues.put("comp_local", this.getLocal());
+        insertValues.put("comp_titulo", this.getTitulo());
+        insertValues.put("comp_data", this.getData());
+        insertValues.put("comp_valTot", this.getValorTotal());
+
+        dbInsert = database.insert("compra", null, insertValues);
+
+        if(dbInsert > 0){
+            System.out.println("Dados inseridos");
+            System.out.println(dbInsert + " linhas afetadas");
+
+            this.setId(database);
+            System.out.println("Id da compra: " + this.getId());
+        } else {
+            System.out.println("Erro na inserção");
+        }
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(SQLiteDatabase database) {
+        final Cursor cursor;
+
+        cursor = database.query("compra", new String[]{"comp_data"}, "comp_data = "+ this.getData(), null, null, null, null);
+
+        if(cursor.getCount() == 1){
+            this.id = cursor.getInt(0);
+        }
     }
 }
 

@@ -1,18 +1,23 @@
 package sp.senai.br.mercapli;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
 
-import sp.senai.br.mercapli.adapters.CompraAdapter;
+import sp.senai.br.mercapli.adapters.CarrinhoAdapter;
+import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Item;
+import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
 
 import static sp.senai.br.mercapli.Constant.PROD_EDIT;
 
@@ -21,7 +26,16 @@ public class CarrinhoActivity extends AppCompatActivity {
     private TextView tvValorTotal;
     private RecyclerView rvCompraProdutos;
 
-    CompraAdapter adapter = new CompraAdapter(this);
+    private CarrinhoAdapter adapter = new CarrinhoAdapter(this);
+    private RecyclerView.RecyclerListener recyclerListener = holder -> {
+        if(tvValorTotal != null){
+            atualizarValorTotal();
+        }
+    };
+
+    private Compra newCompra = new Compra();
+
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,21 +45,14 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         rvCompraProdutos = findViewById(R.id.rvCompraProdutos);
         tvValorTotal     = findViewById(R.id.tvValorTotal    );
+        database         = new CriarBD(getApplicationContext()).getWritableDatabase();
 
-        RecyclerView.RecyclerListener recyclerListener = holder -> {
-            if(tvValorTotal != null){
-                atualizarValorTotal();
-            }
-        };
-
-        tvValorTotal.setText(
-                NumberFormat.getCurrencyInstance().format(0)
-        );
-        rvCompraProdutos.setAdapter(adapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
-        rvCompraProdutos.setLayoutManager(layoutManager);
+        tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(0));
 
+        rvCompraProdutos.setAdapter(adapter);
+        rvCompraProdutos.setLayoutManager(layoutManager);
         rvCompraProdutos.setRecyclerListener(recyclerListener);
     }
 
@@ -74,5 +81,18 @@ public class CarrinhoActivity extends AppCompatActivity {
         tvValorTotal.setText(
                 NumberFormat.getCurrencyInstance().format(adapter.getValorTotal())
         );
+    }
+
+    public void finalizarCompra (View view) {
+        System.out.println("Finalizando compra...");
+        newCompra.setValorTotal(adapter.getValorTotal());
+        newCompra.setItems(adapter.getProdutos());
+
+        System.out.println("Valor total:" + newCompra.getValorTotal());
+        System.out.println("Itens:");
+        for (Item item: adapter.getProdutos()) { System.out.println(item.getNome()); }
+
+        DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
+        dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
     }
 }
