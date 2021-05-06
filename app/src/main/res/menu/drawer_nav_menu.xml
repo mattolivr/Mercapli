@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menuConfig"
+        android:icon="@drawable/ic_gear"
+        android:title="Configurações do Aplicativo"/>
+
+
+    <item
+        android:id="@+id/menuAjuda"
+        android:icon="@drawable/ic_ajuda"
+        android:title="Ajuda"/>
+    
+</menu>

@@ -4,10 +4,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,6 +43,9 @@ public class CompraFragment extends Fragment {
 
     private SQLiteDatabase database;
 
+    DrawerLayout drawerLayoutCompra;
+    ImageButton imageMenuCompra;
+
     public CompraFragment() {
         // Required empty public constructor
     }
@@ -63,8 +72,18 @@ public class CompraFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_compra, container, false);
+
+        drawerLayoutCompra = view.findViewById(R.id.drawerLayoutCompra);
+        imageMenuCompra = view.findViewById(R.id.imageMenuCompra);
+
+        imageMenuCompra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                drawerLayoutCompra.openDrawer(GravityCompat.START);
+            }
+        });
+
         compraAdapter = new CompraAdapter();
 
         rvCompras = view.findViewById(R.id.rvCompras);
@@ -129,5 +148,6 @@ public class CompraFragment extends Fragment {
     public void callCarrinhoActivity() {
         Intent it = new Intent(super.getContext(), CarrinhoActivity.class);
         startActivity(it);
+    }
     }
 }
