@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -16,27 +17,25 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.NumberFormat;
+
 import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.database.CriarBD;
 
 public class CompraFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     private RecyclerView rvCompras;
     private CompraAdapter compraAdapter;
 
-    private RecyclerView.RecyclerListener recyclerListener;
+    public RecyclerView.RecyclerListener recyclerListener = holder -> {
+        System.out.println("Repetição");
+        getCompras();
+        atualizarGastos();
+    };
 
     private Button btnAdicionarCompra;
+    private TextView tvValorTotal;
 
     private SQLiteDatabase database;
 
@@ -47,12 +46,9 @@ public class CompraFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
-    public static CompraFragment newInstance(String param1, String param2) {
+    public static CompraFragment newInstance() {
         CompraFragment fragment = new CompraFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -60,10 +56,6 @@ public class CompraFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -80,13 +72,10 @@ public class CompraFragment extends Fragment {
 
         rvCompras = view.findViewById(R.id.rvCompras);
         btnAdicionarCompra = view.findViewById(R.id.btnNovaCompra);
+        tvValorTotal = view.findViewById(R.id.tvValorTotal);
 
         RecyclerView.LayoutManager verticalLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
         database = new CriarBD(view.getContext()).getReadableDatabase();
-        recyclerListener = holder -> {
-            compraAdapter.notifyDataSetChanged();
-            getCompras();
-        };
 
         rvCompras.setAdapter(compraAdapter);
         rvCompras.setLayoutManager(verticalLayoutManager);
@@ -98,8 +87,8 @@ public class CompraFragment extends Fragment {
             compraAdapter.addCompra(newCompra);
             callCarrinhoActivity();
         });
-
         getCompras();
+        atualizarGastos();
         return view;
     }
 
@@ -117,13 +106,12 @@ public class CompraFragment extends Fragment {
                 null
         );
 
-        System.out.println(cursor.getCount());
+        System.out.println("Número de Registros" + cursor.getCount());
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();
 
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                System.out.println(cursor.getString(cursor.getPosition()));
                 Compra newCompra = new Compra();
 
                 newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("comp_titulo")));
@@ -131,10 +119,20 @@ public class CompraFragment extends Fragment {
                 newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("comp_valTot")));
 
                 compraAdapter.addCompra(newCompra);
-
-                System.out.println(newCompra.getData());
             }
         }
+    }
+
+    public void atualizarGastos() {
+        Double dGastos = 0.0;
+
+        if(compraAdapter.getCompras() != null){
+            for(Compra compra : compraAdapter.getCompras()){
+                dGastos += compra.getValorTotal();
+            }
+        }
+
+        tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(dGastos));
     }
 
     public void callCarrinhoActivity() {

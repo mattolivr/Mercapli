@@ -6,7 +6,10 @@ import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import sp.senai.br.mercapli.R;
@@ -33,9 +36,12 @@ public class CompraAdapter extends RecyclerView.Adapter {
         Compra compra = compras.get(position);
 
         holder.titulo.setText(compra.getTitulo());
-        holder.data  .setText(String.valueOf(compra.getData()));
+        holder.data  .setText(DateFormat.getDateInstance(DateFormat.LONG).format(new Date(compra.getData())));
         holder.local .setText(compra.getLocal());
         holder.valor .setText(String.valueOf(compra.getValorTotal()));
+
+        if(holder.titulo.getText().equals("")) holder.titulo.setHeight(0);
+        if(holder.local .getText().equals("")) holder.local .setHeight(0);
 
         holder.clLayout.setOnClickListener(view -> {
 
@@ -49,5 +55,13 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
     public void addCompra(Compra compra){
         this.compras.add(compra);
+    }
+
+    public List<Compra> getCompras() {
+        if(this.getItemCount() > 0){
+            return this.compras;
+        } else {
+            return null;
+        }
     }
 }
