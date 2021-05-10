@@ -2,6 +2,7 @@ package sp.senai.br.mercapli.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -27,7 +28,8 @@ public class CarrinhoDialog extends DialogFragment {
         builder.setTitle(R.string.finalizar_compra)
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
                     compra.finalizarCompra(database);
-                    getActivity().finish();
+                    System.out.println("alalalalala");
+                    getActivity().onBackPressed();
                 })
                 .setNegativeButton(R.string.nao, ((dialogInterface, i) -> {
 

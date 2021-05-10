@@ -30,8 +30,8 @@ public class CompraFragment extends Fragment {
 
     public RecyclerView.RecyclerListener recyclerListener = holder -> {
         System.out.println("Repetição");
-        getCompras();
-        atualizarGastos();
+//        getCompras();
+//        atualizarGastos();
     };
 
     private Button btnAdicionarCompra;
@@ -56,6 +56,13 @@ public class CompraFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getCompras();
+        atualizarGastos();
     }
 
     @Override
@@ -109,7 +116,9 @@ public class CompraFragment extends Fragment {
         System.out.println("Número de Registros" + cursor.getCount());
 
         if(cursor.getCount() > 0){
+
             cursor.moveToFirst();
+            compraAdapter.resetCompra();
 
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 Compra newCompra = new Compra();

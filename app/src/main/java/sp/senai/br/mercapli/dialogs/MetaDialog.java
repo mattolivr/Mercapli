@@ -15,7 +15,7 @@ public class MetaDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog( Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView()
-        return;
+//        builder.setView();
+        return builder.create();
     }
 }

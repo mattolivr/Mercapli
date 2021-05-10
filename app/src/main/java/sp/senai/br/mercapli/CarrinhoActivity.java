@@ -1,5 +1,6 @@
 package sp.senai.br.mercapli;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -34,7 +35,6 @@ public class CarrinhoActivity extends AppCompatActivity {
     };
 
     private Compra newCompra = new Compra();
-
     private SQLiteDatabase database;
 
     @Override

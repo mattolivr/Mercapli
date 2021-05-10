@@ -57,6 +57,8 @@ public class CompraAdapter extends RecyclerView.Adapter {
         this.compras.add(compra);
     }
 
+    public void resetCompra() { this.compras.clear(); }
+
     public List<Compra> getCompras() {
         if(this.getItemCount() > 0){
             return this.compras;
