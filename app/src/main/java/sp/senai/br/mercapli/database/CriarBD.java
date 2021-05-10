@@ -17,12 +17,14 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE item(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "comp_id_fk INTEGER NOT NULL," +
+                "lista_id_fk INTEGER NOT NULL," +
                 "item_nome VARCHAR(50) NOT NULL," +
                 "item_valor DOUBLE NOT NULL," +
                 "item_qtde INTEGER NOT NULL," +
                 "item_foto VARCHAR(100)," +
                 "item_cat VARCHAR(50) NOT NULL,"+
-                "FOREIGN KEY(comp_id_fk) REFERENCES compra(_id));");
+                "FOREIGN KEY(comp_id_fk) REFERENCES compra(_id)," +
+                "FOREIGN KEY(lista_id_fk) REFERENCES lista(_id));");
 
         sqLiteDatabase.execSQL("CREATE TABLE compra(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -30,6 +32,11 @@ public class CriarBD extends SQLiteOpenHelper {
                 "comp_titulo VARCHAR(50)," +
                 "comp_data LONG NOT NULL," +
                 "comp_valTot DOUBLE NOT NULL);");
+
+        sqLiteDatabase.execSQL("CREATE TABLE lista(" +
+                "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "lista_local VARCHAR(50)," +
+                "lista_titulo VARCHAR(50));");
     }
 
     @Override
