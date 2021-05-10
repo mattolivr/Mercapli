@@ -36,7 +36,7 @@ public class CompraAdapter extends RecyclerView.Adapter {
         Compra compra = compras.get(position);
 
         holder.titulo.setText(compra.getTitulo());
-        holder.data  .setText(DateFormat.getDateInstance(DateFormat.LONG).format(new Date(compra.getData())));
+        holder.data  .setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(compra.getData()));
         holder.local .setText(compra.getLocal());
         holder.valor .setText(String.valueOf(compra.getValorTotal()));
 

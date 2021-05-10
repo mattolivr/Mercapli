@@ -23,7 +23,7 @@ public class Compra {
     private String titulo;
 
     public Compra (){
-        setData();
+        setData(1);
         setValorTotal(0.0);
         setLocal("");
         setTitulo("");
@@ -41,8 +41,8 @@ public class Compra {
         return data;
     }
 
-    private void setData() {
-        this.data = System.currentTimeMillis();
+    public void setData(long data) {
+        this.data = data;
     }
 
     public String getLocal() {
@@ -113,12 +113,11 @@ public class Compra {
 
     public void finalizarCompra (SQLiteDatabase database) {
         long dbInsert;
-        String[] campos = {"_id", "comp_local", "comp_titulo", "comp_data", "comp_valTot"};
         ContentValues insertValues = new ContentValues();
 
         insertValues.put("comp_local", this.getLocal());
         insertValues.put("comp_titulo", this.getTitulo());
-        insertValues.put("comp_data", this.getData());
+        insertValues.put("comp_data", System.currentTimeMillis());
         insertValues.put("comp_valTot", this.getValorTotal());
 
         dbInsert = database.insert("compra", null, insertValues);
