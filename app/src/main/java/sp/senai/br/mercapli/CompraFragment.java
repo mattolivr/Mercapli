@@ -28,12 +28,6 @@ public class CompraFragment extends Fragment {
     private RecyclerView rvCompras;
     private CompraAdapter compraAdapter;
 
-    public RecyclerView.RecyclerListener recyclerListener = holder -> {
-        System.out.println("Repetição");
-//        getCompras();
-//        atualizarGastos();
-    };
-
     private Button btnAdicionarCompra;
     private TextView tvValorTotal;
 
@@ -86,7 +80,6 @@ public class CompraFragment extends Fragment {
 
         rvCompras.setAdapter(compraAdapter);
         rvCompras.setLayoutManager(verticalLayoutManager);
-        rvCompras.setRecyclerListener(recyclerListener);
 
         btnAdicionarCompra.setOnClickListener(view1 -> {
             Compra newCompra = new Compra();
@@ -126,6 +119,7 @@ public class CompraFragment extends Fragment {
                 newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("comp_titulo")));
                 newCompra.setLocal (cursor.getString(cursor.getColumnIndexOrThrow("comp_local" )));
                 newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("comp_valTot")));
+                newCompra.setData(cursor.getLong(cursor.getColumnIndexOrThrow("comp_data")));
 
                 compraAdapter.addCompra(newCompra);
             }
