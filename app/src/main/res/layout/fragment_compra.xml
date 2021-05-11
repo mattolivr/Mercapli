@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llCompraLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -21,6 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/llCompraHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="9dp"
@@ -29,7 +30,7 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/imageMenuCompra"
+                android:id="@+id/ibCompraMenu"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="0"
@@ -39,7 +40,7 @@
                 android:src="@drawable/ic_menu" />
 
             <TextView
-                android:id="@+id/tvTexto1"
+                android:id="@+id/tvCompraHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -48,7 +49,7 @@
                 android:textSize="24sp" />
 
             <TextView
-                android:id="@+id/tvValorTotal"
+                android:id="@+id/tvCompraValorTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -58,7 +59,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/ibAdicionarCompraPlus"
+                android:id="@+id/ibCompraAddCompra"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_weight="0"
@@ -69,35 +70,36 @@
         </LinearLayout>
 
         <ScrollView
+            android:id="@+id/svCompraItens"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/llCompraItens"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvCompras"
+                    android:id="@+id/rvCompraItens"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="8dp"
-                    android:layout_marginBottom="24dp"/>
+                    android:layout_marginBottom="24dp" />
             </LinearLayout>
         </ScrollView>
 
     </LinearLayout>
 
         <Button
-            android:id="@+id/btnNovaCompra"
+            android:id="@+id/btnCompraAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:onClick="adicionarCompra"
             android:text="Nova Compra"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
+            app:layout_constraintBottom_toBottomOf="@+id/llCompraLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

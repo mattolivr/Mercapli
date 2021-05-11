@@ -11,8 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
-import sp.senai.br.mercapli.classes.Compra;
-
 public class ListaFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -56,7 +54,7 @@ public class ListaFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
 
         drawerLayoutLista = view.findViewById(R.id.drawerLayoutLista);
-        imageMenuLista = view.findViewById(R.id.imageMenuLista);
+        imageMenuLista = view.findViewById(R.id.ibListaMenu);
 
         imageMenuLista.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,5 @@
 package sp.senai.br.mercapli;
 
-import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +23,8 @@ import static sp.senai.br.mercapli.Constant.PROD_EDIT;
 
 public class CarrinhoActivity extends AppCompatActivity {
 
+    // TODO: Inserção do Local e Título da Compra
+
     private TextView tvValorTotal;
     private RecyclerView rvCompraProdutos;
 
@@ -43,8 +44,8 @@ public class CarrinhoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_carrinho);
         getSupportActionBar().hide();
 
-        rvCompraProdutos = findViewById(R.id.rvCompraProdutos);
-        tvValorTotal     = findViewById(R.id.tvValorTotal    );
+        rvCompraProdutos = findViewById(R.id.rvCarrinhoProdutos);
+        tvValorTotal     = findViewById(R.id.tvCarrinhoValorTotal);
         database         = new CriarBD(getApplicationContext()).getWritableDatabase();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
@@ -85,7 +86,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     public void finalizarCompra (View view) {
         newCompra.setValorTotal(adapter.getValorTotal());
-        newCompra.setItems(adapter.getProdutos());
+        newCompra.setItens(adapter.getProdutos());
 
         DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
         dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");

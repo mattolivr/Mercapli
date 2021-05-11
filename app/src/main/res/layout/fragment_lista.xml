@@ -8,28 +8,32 @@
     tools:context=".ListaFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clListaLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ScrollView
+            android:id="@+id/svListaLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/llListalayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/llListaHeader"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="9dp"
+                    android:layout_marginLeft="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginRight="8dp"
                     android:orientation="horizontal">
 
                     <ImageButton
-                        android:id="@+id/imageMenuLista"
+                        android:id="@+id/ibListaMenu"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -39,13 +43,13 @@
                         android:src="@drawable/ic_menu" />
 
                     <TextView
-                        android:id="@+id/textView10"
+                        android:id="@+id/tvListaHeader"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1" />
 
                     <ImageButton
-                        android:id="@+id/imageButton8"
+                        android:id="@+id/ibListaAdd"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_weight="0"
@@ -84,6 +88,7 @@
                 </androidx.gridlayout.widget.GridLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvListaItens"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="16dp"
@@ -95,7 +100,7 @@
         </ScrollView>
 
         <Button
-            android:id="@+id/button7"
+            android:id="@+id/btnNovaLista"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"

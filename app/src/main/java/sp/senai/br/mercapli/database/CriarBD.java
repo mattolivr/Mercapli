@@ -43,6 +43,7 @@ public class CriarBD extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS item");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS compra");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS lista");
 
         onCreate(sqLiteDatabase);
     }

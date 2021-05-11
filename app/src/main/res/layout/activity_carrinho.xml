@@ -8,7 +8,7 @@
     tools:context=".CarrinhoActivity">
 
     <LinearLayout
-        android:id="@+id/llHeader"
+        android:id="@+id/llCarrinhoHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/imageMenuCompra"
+            android:id="@+id/ibCarrinhoMenu"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="0"
@@ -31,7 +31,7 @@
             android:src="@drawable/ic_arrow_back" />
 
         <TextView
-            android:id="@+id/tvTexto1"
+            android:id="@+id/tvCarrinhoTextoHeader"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -40,7 +40,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/tvValorTotal"
+            android:id="@+id/tvCarrinhoValorTotal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -50,7 +50,7 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/ibAdicionarCompraPlus"
+            android:id="@+id/ibCarrinhoAddCompra"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="0"
@@ -61,7 +61,7 @@
     </LinearLayout>
 
     <ProgressBar
-        android:id="@+id/pbMeta"
+        android:id="@+id/pbCarrinhoMeta"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -70,26 +70,26 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/llCarrinhoHeader" />
 
     <ScrollView
-        android:id="@+id/svItens"
+        android:id="@+id/svCarrinhoItens"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbMeta">
+        app:layout_constraintTop_toBottomOf="@+id/pbCarrinhoMeta">
 
         <LinearLayout
-            android:id="@+id/llItens"
+            android:id="@+id/llCarrinhoItens"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCompraProdutos"
+                android:id="@+id/rvCarrinhoProdutos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
@@ -98,6 +98,7 @@
     </ScrollView>
 
     <LinearLayout
+        android:id="@+id/llCarrinhoBotoes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -107,7 +108,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
-            android:id="@+id/btnFinalizarCompra"
+            android:id="@+id/btnCarrinhoFinalizar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="4dp"
@@ -116,7 +117,7 @@
             android:text="Finalizar Compra" />
 
         <Button
-            android:id="@+id/btnAdicionar"
+            android:id="@+id/btnCarrinhoAdicionar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"

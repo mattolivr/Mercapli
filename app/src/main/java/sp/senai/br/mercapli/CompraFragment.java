@@ -23,10 +23,13 @@ import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.database.CriarBD;
 
+import static sp.senai.br.mercapli.Constant.GASTO_TOTAL;
+
 public class CompraFragment extends Fragment {
 
     private RecyclerView rvCompras;
     private CompraAdapter compraAdapter;
+    private LinearLayoutManager compraLayoutManager;
 
     private Button btnAdicionarCompra;
     private TextView tvValorTotal;
@@ -65,31 +68,35 @@ public class CompraFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_compra, container, false);
 
         drawerLayoutCompra = view.findViewById(R.id.drawerLayoutCompra);
-        imageMenuCompra = view.findViewById(R.id.imageMenuCompra);
+        imageMenuCompra = view.findViewById(R.id.ibCompraMenu);
 
         imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
         compraAdapter = new CompraAdapter();
 
-        rvCompras = view.findViewById(R.id.rvCompras);
-        btnAdicionarCompra = view.findViewById(R.id.btnNovaCompra);
-        tvValorTotal = view.findViewById(R.id.tvValorTotal);
+        rvCompras = view.findViewById(R.id.rvCompraItens);
+        btnAdicionarCompra = view.findViewById(R.id.btnCompraAdd);
+        tvValorTotal = view.findViewById(R.id.tvCompraValorTotal);
 
-        RecyclerView.LayoutManager verticalLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
+        compraLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
+        RecyclerView.LayoutManager verticalLayoutManager = compraLayoutManager;
         database = new CriarBD(view.getContext()).getReadableDatabase();
 
         rvCompras.setAdapter(compraAdapter);
         rvCompras.setLayoutManager(verticalLayoutManager);
 
-        btnAdicionarCompra.setOnClickListener(view1 -> {
-            Compra newCompra = new Compra();
+        btnAdicionarCompra.setOnClickListener(view1 -> adicionarCompra());
 
-            compraAdapter.addCompra(newCompra);
-            callCarrinhoActivity();
-        });
         getCompras();
         atualizarGastos();
         return view;
+    }
+
+    public void adicionarCompra() {
+        Compra newCompra = new Compra();
+
+        compraAdapter.addCompra(newCompra);
+        callCarrinhoActivity();
     }
 
     public void getCompras() {
@@ -135,6 +142,7 @@ public class CompraFragment extends Fragment {
             }
         }
 
+        GASTO_TOTAL = dGastos;
         tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(dGastos));
     }
 

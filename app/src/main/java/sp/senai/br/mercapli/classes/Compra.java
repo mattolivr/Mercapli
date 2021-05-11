@@ -29,12 +29,36 @@ public class Compra {
         setTitulo("");
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(SQLiteDatabase database) {
+        final Cursor cursor;
+
+        cursor = database.query("compra", new String[]{"comp_data"}, "comp_data = "+ this.getData(), null, null, null, null);
+
+        if(cursor != null){
+            cursor.moveToFirst();
+        }
+
+        if(cursor.getCount() == 1){
+            this.id = cursor.getInt(cursor.getColumnIndex("comp_data"));
+        }
+    }
+
     public double getValorTotal() {
         return valorTotal;
     }
 
     public void setValorTotal(Double valorTotal) {
         this.valorTotal = valorTotal;
+    }
+
+    public void setItens(List<Item> items) {
+        for (Item item: items) {
+            this.itens.add(item);
+        }
     }
 
     public long getData() {
@@ -61,56 +85,6 @@ public class Compra {
         this.titulo = titulo;
     }
 
-    public static String getItens() {
-
-        String smensagem = "";
-
-        for(Item item : itens) {
-            smensagem += ""+item.getNome()+" ~ " + item.getValor() + " ~ " + item.getQuantidade() +" // ";
-        }
-
-        return smensagem;
-    }
-
-    public void setItems (List<Item> items) {
-        for (Item item: items) {
-            this.itens.add(item);
-        }
-    }
-
-    public void alterarItem (int itemId, String itemNome, Double itemValor, Integer itemQtde) {
-
-        // Compensar valores null
-        if (itemNome == null)  { itemNome  = itens.get(itemId-1).getNome(); }
-        if (itemValor == null) { itemValor = itens.get(itemId-1).getValor(); }
-        if (itemQtde == null)  { itemQtde  = itens.get(itemId-1).getQuantidade(); }
-
-        // Reescrever valores
-        for (int i = 0; i < itens.toArray().length; i++) {
-            if (itens.get(i).getId() == itemId){
-                itens.get(i).setNome(itemNome);
-                itens.get(i).setValor(itemValor);
-                itens.get(i).setQuantidade(itemQtde);
-            }
-        }
-
-    }
-    public void excluirItem (String itemNome) {
-        for (int i = 0; i < itens.toArray().length; i++) {
-            if (itens.get(i).getNome().equals(itemNome)){
-                itens.remove(itens.get(i));
-            }
-        }
-    }
-
-    public void excluirItem (int itemID) {
-        for (int i = 0; i < itens.toArray().length; i++) {
-            if (itens.get(i).getId() == itemID){
-                itens.remove(itens.get(i));
-            }
-        }
-    }
-
     public void finalizarCompra (SQLiteDatabase database) {
         long dbInsert;
         ContentValues insertValues = new ContentValues();
@@ -127,22 +101,5 @@ public class Compra {
         }
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(SQLiteDatabase database) {
-        final Cursor cursor;
-
-        cursor = database.query("compra", new String[]{"comp_data"}, "comp_data = "+ this.getData(), null, null, null, null);
-
-        if(cursor != null){
-            cursor.moveToFirst();
-        }
-
-        if(cursor.getCount() == 1){
-            this.id = cursor.getInt(cursor.getColumnIndex("comp_data"));
-        }
-    }
 }
 
