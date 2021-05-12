@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Mercapli">
+        <activity android:name=".CompraViewActivity"></activity>
         <activity android:name=".CarrinhoActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

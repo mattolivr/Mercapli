@@ -36,15 +36,19 @@ public class Compra {
     public void setId(SQLiteDatabase database) {
         final Cursor cursor;
 
-        cursor = database.query("compra", new String[]{"comp_data"}, "comp_data = "+ this.getData(), null, null, null, null);
+        cursor = database.query("compra", new String[]{"_id"}, "comp_data = "+ this.getData(), null, null, null, null);
 
         if(cursor != null){
             cursor.moveToFirst();
         }
 
         if(cursor.getCount() == 1){
-            this.id = cursor.getInt(cursor.getColumnIndex("comp_data"));
+            this.id = cursor.getInt(cursor.getColumnIndex("_id"));
         }
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 
     public double getValorTotal() {
@@ -86,7 +90,6 @@ public class Compra {
     }
 
     public void finalizarCompra (SQLiteDatabase database) {
-        long dbInsert;
         ContentValues insertValues = new ContentValues();
 
         insertValues.put("comp_local", this.getLocal());
@@ -94,11 +97,7 @@ public class Compra {
         insertValues.put("comp_data", System.currentTimeMillis());
         insertValues.put("comp_valTot", this.getValorTotal());
 
-        dbInsert = database.insert("compra", null, insertValues);
-
-        if(dbInsert > 0){
-            this.setId(database);
-        }
+        database.insert("compra", null, insertValues);
     }
 
 }

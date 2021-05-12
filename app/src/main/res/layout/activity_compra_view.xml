@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#96c3ec"
-    tools:context=".CarrinhoActivity">
+    android:background="@color/blue_100"
+    tools:context=".CompraViewActivity">
 
     <LinearLayout
-        android:id="@+id/llCarrinhoHeader"
+        android:id="@+id/llCompraViewHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -20,18 +20,17 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageButton
-            android:id="@+id/ibCarrinhoMenu"
+            android:id="@+id/ibCompraViewVoltar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="0"
             android:background="#00FFFFFF"
-            android:onClick="closeActivity"
             android:padding="2dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_arrow_back" />
 
         <TextView
-            android:id="@+id/tvCarrinhoTextoHeader"
+            android:id="@+id/tvCompraViewTextoHeader"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -40,7 +39,7 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/tvCarrinhoValorTotal"
+            android:id="@+id/tvCompraViewValorTotal"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -50,81 +49,74 @@
             android:textStyle="bold" />
 
         <ImageButton
-            android:id="@+id/ibCarrinhoAddCompra"
+            android:id="@+id/ibCompraViewOptions"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="0"
             android:background="#00FFFFFF"
             android:padding="2dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_new" />
+            android:src="@android:drawable/btn_star_big_on"
+            android:visibility="visible" />
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/pbCarrinhoMeta"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="0dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingTop="4dp"
+        android:paddingRight="4dp"
+        android:paddingBottom="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/llCarrinhoHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/llCompraViewHeader">
+
+        <TextView
+            android:id="@+id/tvCompraViewTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:textSize="22sp" />
+    </LinearLayout>
 
     <ScrollView
-        android:id="@+id/svCarrinhoItens"
+        android:id="@+id/svCompraViewItens"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pbCarrinhoMeta">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <LinearLayout
-            android:id="@+id/llCarrinhoItens"
+            android:id="@+id/llCompraViewItens"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvCarrinhoProdutos"
+                android:id="@+id/rvCompraViewProdutos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginBottom="58dp" />
+                android:layout_marginRight="8dp" />
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:id="@+id/llCarrinhoBotoes"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
-
-        <Button
-            android:id="@+id/btnCarrinhoFinalizar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="4dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="finalizarCompra"
-            android:text="Finalizar Compra" />
-
-        <Button
-            android:id="@+id/btnCarrinhoAdicionar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="4dp"
-            android:layout_marginBottom="8dp"
-            android:onClick="adicionarProduto"
-            android:text="ADICIONAR PRODUTO" />
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
