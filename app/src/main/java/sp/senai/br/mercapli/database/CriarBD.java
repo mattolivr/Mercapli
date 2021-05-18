@@ -16,8 +16,8 @@ public class CriarBD extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL("CREATE TABLE item(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                "comp_id_fk INTEGER NOT NULL," +
-                "lista_id_fk INTEGER NOT NULL," +
+                "comp_id_fk INTEGER," +
+                "lista_id_fk INTEGER," +
                 "item_nome VARCHAR(50) NOT NULL," +
                 "item_valor DOUBLE NOT NULL," +
                 "item_qtde INTEGER NOT NULL," +
@@ -31,7 +31,7 @@ public class CriarBD extends SQLiteOpenHelper {
                 "comp_local VARCHAR(50)," +
                 "comp_titulo VARCHAR(50)," +
                 "comp_data LONG NOT NULL," +
-                "comp_valTot DOUBLE NOT NULL);");
+                "comp_val_tot DOUBLE NOT NULL);");
 
         sqLiteDatabase.execSQL("CREATE TABLE lista(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
