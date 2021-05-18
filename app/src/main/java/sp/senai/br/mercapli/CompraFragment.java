@@ -72,6 +72,8 @@ public class CompraFragment extends Fragment {
 
         imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
+        compraAdapter = new CompraAdapter();
+
         rvCompras = view.findViewById(R.id.rvCompraItens);
         btnAdicionarCompra = view.findViewById(R.id.btnCompraAdd);
         tvValorTotal = view.findViewById(R.id.tvCompraValorTotal);
@@ -79,8 +81,6 @@ public class CompraFragment extends Fragment {
         compraLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
         RecyclerView.LayoutManager verticalLayoutManager = compraLayoutManager;
         database = new CriarBD(view.getContext()).getReadableDatabase();
-
-        compraAdapter = new CompraAdapter(database);
 
         rvCompras.setAdapter(compraAdapter);
         rvCompras.setLayoutManager(verticalLayoutManager);
