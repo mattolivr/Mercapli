@@ -57,7 +57,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                 holder.cat.setText(produto.getCategoria());
                 holder.id.setText("" +produto.getId());
                 holder.qtde.setText("x" + produto.getQuantidade());
-                holder.precoFinal.setText(NumberFormat.getCurrencyInstance().format(produto.getValorFinal()));
+                holder.precoFinal.setText(NumberFormat.getCurrencyInstance().format(produto.getValor() * produto.getQuantidade()));
 
                 // Ouvir clique para editar
                 holder.cLayout.setOnClickListener(view -> {
@@ -112,10 +112,9 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
     public Double getValorTotal() {
         Double ValorTotal = 0.0;
 
-        for(int i = 0; i<produtos.size(); i++)
-        {
-            if( produtos.get(i).getValorFinal() != null){
-                ValorTotal += produtos.get(i).getValorFinal();
+        for (Item produto: produtos) {
+            if(produto != null){
+                ValorTotal += produto.getValorFinal();
             }
         }
 
@@ -142,7 +141,5 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
         produto.setValor(dValor);
 //                    produto.setCategoria(holder.catE.toString());
         produto.setQuantidade(iQtde);
-
-        produto.setValorFinal(dValor * iQtde);
     }
 }

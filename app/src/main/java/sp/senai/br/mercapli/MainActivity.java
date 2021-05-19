@@ -15,6 +15,8 @@ import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import java.io.File;
+
 import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.database.CriarBD;

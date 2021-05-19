@@ -81,11 +81,7 @@ public class Item {
     }
 
     public Double getValorFinal() {
-        return valorFinal;
-    }
-
-    public void setValorFinal(Double valorFinal) {
-        this.valorFinal = valorFinal;
+        return getValor() * getQuantidade();
     }
 }
 

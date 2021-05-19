@@ -30,10 +30,11 @@ public class Compra {
     }
 
     public Compra (SQLiteDatabase database, long data){
+        // TODO: trocar data por id
         final Cursor cursorCompra;
         final Cursor cursorItens;
 
-        String[] camposCompra = {"_id", "comp_local", "comp_titulo", "comp_data", "comp_val_tot"};
+        String[] camposCompra = {"_id", "comp_local", "comp_titulo", "comp_data", "comp_valTot"};
         String[] camposItens  = {"_id", "item_nome", "item_valor", "item_qtde", "item_foto", "item_cat"};
 
         List<Item> itens = new ArrayList<>();
@@ -47,7 +48,8 @@ public class Compra {
                 this.setId(cursorCompra.getInt(cursorCompra.getColumnIndexOrThrow("_id")));
                 this.setTitulo(cursorCompra.getString(cursorCompra.getColumnIndexOrThrow("comp_titulo")));
                 this.setLocal(cursorCompra.getString(cursorCompra.getColumnIndexOrThrow("comp_local")));
-                this.setValorTotal(cursorCompra.getDouble(cursorCompra.getColumnIndexOrThrow("comp_val_tot")));
+                this.setValorTotal(cursorCompra.getDouble(cursorCompra.getColumnIndexOrThrow("comp_valTot")));
+                this.setData(cursorCompra.getLong(cursorCompra.getColumnIndexOrThrow("comp_data")));
 
                 cursorItens  = database.query("item", camposItens, "comp_id_fk = " + this.id, null, null, null, null);
 
@@ -63,6 +65,7 @@ public class Compra {
                 }
             }
         }
+        database.close();
     }
 
     public int getId() {
@@ -103,6 +106,13 @@ public class Compra {
 
     public List<Item> getItens() {
         return itens;
+    }
+
+    public void testarItens() {
+        System.out.println("Itens:");
+        for (Item item: itens) {
+            System.out.println(item.getNome());
+        }
     }
 
     public long getData() {
@@ -160,6 +170,31 @@ public class Compra {
                 database.insertOrThrow("item", null, insertItem);
             }
         }
+        database.close();
+    }
+
+    public void atualizarCompra (SQLiteDatabase database){
+        ContentValues updateCompra = new ContentValues();
+        ContentValues updateItem   = new ContentValues();
+
+        updateCompra.put("comp_local" , this.getLocal());
+        updateCompra.put("comp_titulo", this.getTitulo());
+        updateCompra.put("comp_data"  , this.getData());
+        updateCompra.put("comp_valTot", this.getValorTotal());
+
+        database.update("compra", updateCompra, "_id = " + this.getId(), null);
+
+        if (this.getItens().size() > 0){
+            for (Item item: this.getItens()) {
+                updateItem.put("item_nome" , item.getNome());
+                updateItem.put("item_valor", item.getValor());
+                updateItem.put("item_qtde" , item.getQuantidade());
+//                insertItem.put("item_foto", item.getFoto());
+                updateItem.put("item_cat"  , "");
+                updateItem.put("comp_id_fk", this.getId());
+            }
+        }
+        database.close();
     }
 
 }
