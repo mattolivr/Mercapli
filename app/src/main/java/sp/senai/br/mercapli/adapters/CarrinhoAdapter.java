@@ -90,6 +90,12 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
                 });
 
                 holder.btnPrdEdtCancelar.setOnClickListener(view -> {
+                    produto.setTypeView(PROD_VIEW);
+                    this.notifyItemChanged(position);
+                    this.setEditing(false);
+                });
+
+                holder.btnPrdEdtExcluir.setOnClickListener(view -> {
                     produtos.remove(position);
                     this.notifyItemRemoved(position);
                     this.setEditing(false);

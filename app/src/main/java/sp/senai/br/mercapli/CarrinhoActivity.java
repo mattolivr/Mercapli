@@ -82,7 +82,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             etLocal.setText("");
 
         }else{
-            // TODO: Vizualização reciclada
+            // Vizualização reciclada
             if (compraData > 0){
                 newCompra = new Compra(database, compraData);
 

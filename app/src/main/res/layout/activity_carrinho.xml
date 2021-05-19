@@ -80,6 +80,8 @@
         android:layout_marginEnd="8dp"
         android:background="@color/white"
         android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pbCarrinhoMeta">
@@ -100,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ems="10"
-            android:hint="Local"
+            android:hint="Local da Compra"
             android:inputType="textPersonName" />
     </LinearLayout>
 
