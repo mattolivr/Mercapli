@@ -60,6 +60,7 @@ public class CompraFragment extends Fragment {
         super.onResume();
         getCompras();
         atualizarGastos();
+        // TODO: scroll para o topo
     }
 
     @Override
@@ -72,7 +73,7 @@ public class CompraFragment extends Fragment {
 
         imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
-        compraAdapter = new CompraAdapter();
+        compraAdapter = new CompraAdapter(this.getContext());
 
         rvCompras = view.findViewById(R.id.rvCompraItens);
         btnAdicionarCompra = view.findViewById(R.id.btnCompraAdd);
@@ -113,8 +114,6 @@ public class CompraFragment extends Fragment {
                 null
         );
 
-        System.out.println("Número de Registros" + cursor.getCount());
-
         if(cursor.getCount() > 0){
 
             cursor.moveToFirst();
@@ -131,6 +130,7 @@ public class CompraFragment extends Fragment {
                 compraAdapter.addCompra(newCompra);
             }
         }
+        compraAdapter.notifyDataSetChanged();
     }
 
     public void atualizarGastos() {
@@ -148,6 +148,7 @@ public class CompraFragment extends Fragment {
 
     public void callCarrinhoActivity() {
         Intent it = new Intent(super.getContext(), CarrinhoActivity.class);
+        it.putExtra("newParam", true);
         startActivity(it);
     }
 }

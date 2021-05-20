@@ -10,6 +10,7 @@ import sp.senai.br.mercapli.R;
 
 public class CompraViewHolder extends RecyclerView.ViewHolder {
     final ConstraintLayout clLayout;
+//    final TextView id;
     final TextView valor;
     final TextView local;
     final TextView data;
@@ -18,6 +19,7 @@ public class CompraViewHolder extends RecyclerView.ViewHolder {
     public CompraViewHolder(View view) {
         super(view);
         clLayout = (ConstraintLayout) view.findViewById(R.id.clCompras);
+//        id     = (TextView) view.findViewById(R.id.tvCompraID    );
         valor  = (TextView) view.findViewById(R.id.tvCompraValor );
         local  = (TextView) view.findViewById(R.id.tvCompraLocal );
         data   = (TextView) view.findViewById(R.id.tvCompraData  );

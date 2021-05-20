@@ -1,5 +1,7 @@
 package sp.senai.br.mercapli.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +14,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import sp.senai.br.mercapli.CarrinhoActivity;
+import sp.senai.br.mercapli.CompraFragment;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
 
 public class CompraAdapter extends RecyclerView.Adapter {
 
     private List<Compra> compras = new ArrayList<>();
+    private Context context;
 
-    public CompraAdapter () {}
+    public CompraAdapter (Context context) {
+        this.context = context;
+    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -35,16 +42,24 @@ public class CompraAdapter extends RecyclerView.Adapter {
         CompraViewHolder holder = (CompraViewHolder) viewHolder;
         Compra compra = compras.get(position);
 
+        // TODO: utilizar ID ao invés de Data
+//        holder.id    .setText(compra.getId());
         holder.titulo.setText(compra.getTitulo());
         holder.data  .setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(compra.getData()));
         holder.local .setText(compra.getLocal());
-        holder.valor .setText(String.valueOf(compra.getValorTotal()));
+        holder.valor .setText(NumberFormat.getInstance().format(compra.getValorTotal()));
 
-        if(holder.titulo.getText().equals("")) holder.titulo.setHeight(0);
-        if(holder.local .getText().equals("")) holder.local .setHeight(0);
+        // Campos vazios não ocuparem espaço
+        // TODO: campos somem ao sair de vizualização
+        if(holder.titulo.getText().equals("")) holder.titulo.setHeight(1);
+        if(holder.local.getText() .equals("")) holder.local .setHeight(1);
 
         holder.clLayout.setOnClickListener(view -> {
-
+            System.out.println(compra.getTitulo());
+            Intent it = new Intent(context, CarrinhoActivity.class);
+            it.putExtra("newParam", false);
+            it.putExtra("compraData", compra.getData());
+            context.startActivity(it);
         });
     }
 

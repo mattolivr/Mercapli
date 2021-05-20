@@ -19,6 +19,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/tvCompraID"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:text="TextView"
+            android:visibility="invisible" />
+
+        <TextView
             android:id="@+id/tvCompraValor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

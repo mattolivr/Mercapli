@@ -31,7 +31,7 @@ public class CriarBD extends SQLiteOpenHelper {
                 "comp_local VARCHAR(50)," +
                 "comp_titulo VARCHAR(50)," +
                 "comp_data LONG NOT NULL," +
-                "comp_val_tot DOUBLE NOT NULL);");
+                "comp_valTot DOUBLE NOT NULL);");
 
         sqLiteDatabase.execSQL("CREATE TABLE lista(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
@@ -51,5 +51,6 @@ public class CriarBD extends SQLiteOpenHelper {
     public void reset(SQLiteDatabase sqLiteDatabase) {
         String where = "_id IS NOT NULL";
         sqLiteDatabase.delete("compra", where, null);
+        sqLiteDatabase.delete("item", where, null);
     }
 }

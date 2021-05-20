@@ -24,6 +24,7 @@ public class CarrinhoViewHolder extends RecyclerView.ViewHolder {
     final TextView idE;
     final Button btnPrdEdtAdicionar;
     final Button btnPrdEdtCancelar;
+    final Button btnPrdEdtExcluir;
 
 
     public CarrinhoViewHolder(View view) {
@@ -43,5 +44,6 @@ public class CarrinhoViewHolder extends RecyclerView.ViewHolder {
 
         btnPrdEdtAdicionar = (Button) view.findViewById(R.id.btnPrdEdtAdicionar);
         btnPrdEdtCancelar  = (Button) view.findViewById(R.id.btnPrdEdtCancelar );
+        btnPrdEdtExcluir   = (Button) view.findViewById(R.id.btnPrdEdtExcluir  );
     }
 }

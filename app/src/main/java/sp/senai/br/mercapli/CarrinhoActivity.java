@@ -3,6 +3,9 @@ package sp.senai.br.mercapli;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,22 +23,24 @@ import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
 
 import static sp.senai.br.mercapli.Constant.PROD_EDIT;
+import static sp.senai.br.mercapli.Constant.PROD_VIEW;
 
 public class CarrinhoActivity extends AppCompatActivity {
 
-    // TODO: Inserção do Local e Título da Compra
+    private Boolean isNew;
 
     private TextView tvValorTotal;
+    private EditText etTitulo, etLocal;
     private RecyclerView rvCompraProdutos;
+    private ImageButton ibBack;
+    private Button btFinalizar;
 
-    private CarrinhoAdapter adapter = new CarrinhoAdapter(this);
-    private RecyclerView.RecyclerListener recyclerListener = holder -> {
-        if(tvValorTotal != null){
-            atualizarValorTotal();
-        }
-    };
+    private CarrinhoAdapter adapter;
+    private RecyclerView.RecyclerListener recyclerListener;
+    private RecyclerView.LayoutManager layoutManager;
 
-    private Compra newCompra = new Compra();
+    private Compra newCompra;
+    private long compraData;
     private SQLiteDatabase database;
 
     @Override
@@ -44,21 +49,64 @@ public class CarrinhoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_carrinho);
         getSupportActionBar().hide();
 
-        rvCompraProdutos = findViewById(R.id.rvCarrinhoProdutos);
+        isNew = getIntent().getBooleanExtra("newParam", true);
+        compraData = getIntent().getLongExtra("compraData", 0);
+
         tvValorTotal     = findViewById(R.id.tvCarrinhoValorTotal);
-        database         = new CriarBD(getApplicationContext()).getWritableDatabase();
+        etTitulo         = findViewById(R.id.etCarrinhoTitulo);
+        etLocal          = findViewById(R.id.etCarrinhoLocal);
+        rvCompraProdutos = findViewById(R.id.rvCarrinhoProdutos);
+        ibBack           = findViewById(R.id.ibCarrinhoBack);
+        btFinalizar      = findViewById(R.id.btnCarrinhoFinalizar);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        database = new CriarBD(getApplicationContext()).getWritableDatabase();
+        adapter  = new CarrinhoAdapter(this);
+        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
-        tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(0));
+        recyclerListener = holder -> {
+            if(tvValorTotal != null){
+                atualizarValorTotal();
+            }
+        };
+
+        // TODO: Diálogo -> descartar alterações
+        ibBack.setOnClickListener(voltar -> super.onBackPressed());
+        btFinalizar.setOnClickListener(view -> finalizarCompra());
+
+        if(isNew){
+            // Vizualização Nova
+            newCompra = new Compra();
+
+            tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(0));
+            etTitulo.setText("");
+            etLocal.setText("");
+
+        }else{
+            // Vizualização reciclada
+            if (compraData > 0){
+                newCompra = new Compra(database, compraData);
+
+                etTitulo.setText(newCompra.getTitulo());
+                etLocal.setText(newCompra.getLocal());
+
+                btFinalizar.setText("FINALIZAR ALTERAÇÕES");
+
+                for (Item item: newCompra.getItens()) {
+                    item.setTypeView(PROD_VIEW);
+                    adapter.addProduto(item);
+                }
+                newCompra.testarItens();
+                tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(newCompra.getValorTotal()));
+                // TODO: opções de edição?
+            } else {
+                super.onBackPressed();
+                Toast.makeText(super.getApplicationContext(), "Algo deu Errado!", Toast.LENGTH_SHORT).show();
+            }
+        }
 
         rvCompraProdutos.setAdapter(adapter);
         rvCompraProdutos.setLayoutManager(layoutManager);
         rvCompraProdutos.setRecyclerListener(recyclerListener);
-    }
-
-    public void closeActivity(){
-        super.onBackPressed();
     }
 
     public void preencherLista(){
@@ -84,11 +132,20 @@ public class CarrinhoActivity extends AppCompatActivity {
         );
     }
 
-    public void finalizarCompra (View view) {
+    public void finalizarCompra () {
         newCompra.setValorTotal(adapter.getValorTotal());
         newCompra.setItens(adapter.getProdutos());
+        newCompra.setTitulo(etTitulo.getText().toString());
+        newCompra.setLocal(etLocal.getText().toString());
 
-        DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
-        dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
+        if(isNew){
+            // Finalizar compra nova
+            DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
+            dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
+        } else {
+            // Finalizar alterações
+            newCompra.atualizarCompra(database);
+            super.onBackPressed();
+        }
     }
 }
