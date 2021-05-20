@@ -7,7 +7,5 @@
     <!-- DIALOG ALERTS -->
     <!-- Carrinho -->
     <string name="finalizar_compra">Deseja Finalizar a Compra?</string>
-    <string name="voltar_compra">Parar de editar?</string>
-    <string name="voltar_compra_desc">Suas alterações não serão salvas</string>
 
 </resources>
