@@ -149,7 +149,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private void cancelarCompra() {
         if(isNew){
-
+            super.onBackPressed();
         } else {
             DialogFragment dfcancelarCompra = new CarrinhoBackDialog();
             dfcancelarCompra.show(getSupportFragmentManager(), "carrinhoVoltar");

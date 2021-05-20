@@ -28,6 +28,7 @@ public class Compra {
         setValorTotal(0.0);
         setLocal("");
         setTitulo("");
+        clearItens();
     }
 
     public Compra (SQLiteDatabase database, long data){
@@ -52,9 +53,11 @@ public class Compra {
                 this.setValorTotal(cursorCompra.getDouble(cursorCompra.getColumnIndexOrThrow("comp_valTot")));
                 this.setData(cursorCompra.getLong(cursorCompra.getColumnIndexOrThrow("comp_data")));
 
+                clearItens();
+
                 cursorItens  = database.query("item", camposItens, "comp_id_fk = " + this.id, null, null, null, null);
 
-                if (cursorItens.getCount() > 0 && this.getItens().size() == 0){
+                if (cursorItens.getCount() > 0){
                     for(cursorItens.moveToFirst(); !cursorItens.isAfterLast(); cursorItens.moveToNext()){
                         Item newItem = new Item();
                         newItem.setNome(cursorItens.getString(cursorItens.getColumnIndexOrThrow("item_nome")));
@@ -66,7 +69,6 @@ public class Compra {
                 }
             }
         }
-        database.close();
     }
 
     public int getId() {
@@ -103,6 +105,10 @@ public class Compra {
         for (Item item: items) {
             itens.add(item);
         }
+    }
+
+    public void clearItens () {
+        itens.clear();
     }
 
     public List<Item> getItens() {
@@ -182,7 +188,11 @@ public class Compra {
         updateCompra.put("comp_data"  , this.getData());
         updateCompra.put("comp_valTot", this.getValorTotal());
 
-        database.update("compra", updateCompra, "_id = " + this.getId(), null);
+        if(database.isOpen()){
+            database.update("compra", updateCompra, "_id = " + this.getId(), null);
+        } else {
+
+        }
 
         if (this.getItens().size() > 0){
             for (Item item: this.getItens()) {
