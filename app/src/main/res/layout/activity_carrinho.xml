@@ -155,7 +155,6 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="4dp"
             android:layout_marginBottom="8dp"
-            android:onClick="adicionarProduto"
             android:text="ADICIONAR PRODUTO" />
 
     </LinearLayout>
