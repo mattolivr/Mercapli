@@ -3,6 +3,7 @@ package sp.senai.br.mercapli.classes;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.View;
 import android.widget.Toast;
@@ -53,7 +54,7 @@ public class Compra {
 
                 cursorItens  = database.query("item", camposItens, "comp_id_fk = " + this.id, null, null, null, null);
 
-                if (cursorItens.getCount() > 0){
+                if (cursorItens.getCount() > 0 && this.getItens().size() == 0){
                     for(cursorItens.moveToFirst(); !cursorItens.isAfterLast(); cursorItens.moveToNext()){
                         Item newItem = new Item();
                         newItem.setNome(cursorItens.getString(cursorItens.getColumnIndexOrThrow("item_nome")));
@@ -170,7 +171,6 @@ public class Compra {
                 database.insertOrThrow("item", null, insertItem);
             }
         }
-        database.close();
     }
 
     public void atualizarCompra (SQLiteDatabase database){
@@ -194,7 +194,6 @@ public class Compra {
                 updateItem.put("comp_id_fk", this.getId());
             }
         }
-        database.close();
     }
 
 }
