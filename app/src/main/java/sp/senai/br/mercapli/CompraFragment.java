@@ -14,8 +14,13 @@ import android.widget.TextView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.NumberFormat;
 
@@ -38,6 +43,8 @@ public class CompraFragment extends Fragment {
 
     DrawerLayout drawerLayoutCompra;
     ImageButton imageMenuCompra;
+    NavigationView navigationViewCompra;
+    NavController navControllerCompra;
 
     public CompraFragment() {
         // Required empty public constructor
@@ -70,8 +77,12 @@ public class CompraFragment extends Fragment {
 
         drawerLayoutCompra = view.findViewById(R.id.drawerLayoutCompra);
         imageMenuCompra = view.findViewById(R.id.ibCompraMenu);
+        navigationViewCompra = view.findViewById(R.id.navigationViewCompra);
+        navControllerCompra = Navigation.findNavController(getActivity(), R.id.fragment);
 
         imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
+
+        NavigationUI.setupWithNavController(navigationViewCompra, navControllerCompra);
 
         compraAdapter = new CompraAdapter(this.getContext());
 
