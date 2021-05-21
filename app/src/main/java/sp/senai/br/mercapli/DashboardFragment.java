@@ -5,12 +5,17 @@ import android.os.Bundle;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 
@@ -31,6 +36,8 @@ public class DashboardFragment extends Fragment {
 
     DrawerLayout drawerLayoutDashboard;
     ImageButton imageMenuDashboard;
+    NavigationView navigationViewDashboard;
+    NavController navControllerDashboard;
 
     private TextView tvGastoTotal;
 
@@ -48,6 +55,8 @@ public class DashboardFragment extends Fragment {
         drawerLayoutDashboard = view.findViewById(R.id.drawerLayoutDashboard);
         imageMenuDashboard = view.findViewById(R.id.ibDashMenu);
         tvGastoTotal = view.findViewById(R.id.tvDashValorTotal);
+        navigationViewDashboard = view.findViewById(R.id.navigationViewDashboard);
+        navControllerDashboard = Navigation.findNavController(getActivity(), R.id.fragment);
 
         imageMenuDashboard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +64,8 @@ public class DashboardFragment extends Fragment {
                 drawerLayoutDashboard.openDrawer(GravityCompat.START);
             }
         });
+
+        NavigationUI.setupWithNavController(navigationViewDashboard, navControllerDashboard);
 
         // TODO: Descobrir pq esse TextView ta com frescura
         atualizarGasto();

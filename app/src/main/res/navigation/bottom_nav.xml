@@ -25,4 +25,14 @@
         android:name="sp.senai.br.mercapli.UserFragment"
         android:label="fragment_user"
         tools:layout="@layout/fragment_user" />
+    <fragment
+        android:id="@+id/menuConfig"
+        android:name="sp.senai.br.mercapli.ConfigFragment"
+        android:label="fragment_config"
+        tools:layout="@layout/fragment_config" />
+    <fragment
+        android:id="@+id/menuAjuda"
+        android:name="sp.senai.br.mercapli.AjudaFragment"
+        android:label="fragment_ajuda"
+        tools:layout="@layout/fragment_ajuda" />
 </navigation>
