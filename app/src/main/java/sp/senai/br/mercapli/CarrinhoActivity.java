@@ -97,7 +97,6 @@ public class CarrinhoActivity extends AppCompatActivity {
                     item.setTypeView(PROD_VIEW);
                     adapter.addProduto(item);
                 }
-                newCompra.testarItens();
                 tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(newCompra.getValorTotal()));
                 // TODO: opções de edição?
             } else {

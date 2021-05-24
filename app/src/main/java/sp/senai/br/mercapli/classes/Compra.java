@@ -115,13 +115,6 @@ public class Compra {
         return itens;
     }
 
-    public void testarItens() {
-        System.out.println("Itens:");
-        for (Item item: itens) {
-            System.out.println(item.getNome());
-        }
-    }
-
     public long getData() {
         return data;
     }
@@ -188,11 +181,7 @@ public class Compra {
         updateCompra.put("comp_data"  , this.getData());
         updateCompra.put("comp_valTot", this.getValorTotal());
 
-        if(database.isOpen()){
-            database.update("compra", updateCompra, "_id = " + this.getId(), null);
-        } else {
-
-        }
+        database.update("compra", updateCompra, "_id = " + this.getId(), null);
 
         if (this.getItens().size() > 0){
             for (Item item: this.getItens()) {

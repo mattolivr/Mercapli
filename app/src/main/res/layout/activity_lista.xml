@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue_100"
+    tools:context=".ListaActivity">
+
+    <LinearLayout
+        android:id="@+id/llListaViewHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/ibListaViewBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="0"
+            android:background="#00FFFFFF"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_arrow_back" />
+
+        <TextView
+            android:id="@+id/tvListaViewTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ImageButton
+            android:id="@+id/ibListaViewAdd"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00FFFFFF"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_new" />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbListaViewMeta"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llListaViewHeader" />
+
+    <LinearLayout
+        android:id="@+id/llListaViewDados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pbListaViewMeta">
+
+        <EditText
+            android:id="@+id/etListaViewTitulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="4dp"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Título"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/etListaViewLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="Local da Compra"
+            android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svListaViewItens"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llListaViewDados">
+
+        <LinearLayout
+            android:id="@+id/llListaViewItens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvListaViewItens"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnListaViewAddBot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:text="Adicionar Item"
+        app:layout_constraintBottom_toBottomOf="@+id/svListaViewItens"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
