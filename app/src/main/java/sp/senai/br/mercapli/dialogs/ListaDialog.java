@@ -10,23 +10,24 @@ import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
+import sp.senai.br.mercapli.classes.Lista;
 
-public class CarrinhoDialog extends DialogFragment {
+public class ListaDialog extends DialogFragment {
 
-    private Compra compra;
+    private Lista lista;
     private SQLiteDatabase database;
 
-    public CarrinhoDialog (Compra compra, SQLiteDatabase database) {
-        this.compra = compra;
+    public ListaDialog (Lista lista, SQLiteDatabase database) {
+        this.lista = lista;
         this.database = database;
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.finalizar_compra)
+        builder.setTitle(R.string.finalizar_lista)
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
-                    compra.finalizarCompra(database);
+                    lista.finalizarLista(database);
                     getActivity().onBackPressed();
                 })
                 .setNegativeButton(R.string.nao, ((dialogInterface, i) -> {

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import sp.senai.br.mercapli.R;
 
-public class CarrinhoViewHolder extends RecyclerView.ViewHolder {
+public class ItemViewHolder extends RecyclerView.ViewHolder {
     final ConstraintLayout cLayout;
     final TextView nome;
     final TextView preco;
@@ -27,7 +27,7 @@ public class CarrinhoViewHolder extends RecyclerView.ViewHolder {
     final Button btnPrdEdtExcluir;
 
 
-    public CarrinhoViewHolder(View view) {
+    public ItemViewHolder(View view) {
         super(view);
         cLayout = (ConstraintLayout) view.findViewById(R.id.cl_produto_layout);
         nome    = (TextView) view.findViewById(R.id.nome_produto_layout );

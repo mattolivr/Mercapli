@@ -4,7 +4,6 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,13 +17,13 @@ import sp.senai.br.mercapli.classes.Item;
 import static sp.senai.br.mercapli.Constant.PROD_EDIT;
 import static sp.senai.br.mercapli.Constant.PROD_VIEW;
 
-public class CarrinhoAdapter extends RecyclerView.Adapter {
+public class ItemAdapter extends RecyclerView.Adapter {
 
     private List<Item> produtos = new ArrayList<>();
     private Context context;
     private Boolean editing;
 
-    public CarrinhoAdapter(Context context) {
+    public ItemAdapter(Context context) {
         this.context = context;
         this.editing = false;
     }
@@ -34,19 +33,19 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
 
         switch (viewType) {
             case PROD_VIEW:
-                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto, parent, false);
+                view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto_view, parent, false);
                 view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                return new CarrinhoViewHolder(view);
+                return new ItemViewHolder(view);
             case PROD_EDIT:
                 view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_produto_edit, parent, false);
                 view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                return new CarrinhoViewHolder(view);
+                return new ItemViewHolder(view);
         }
         return null;
     }
 
     @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        CarrinhoViewHolder holder = (CarrinhoViewHolder) viewHolder;
+        ItemViewHolder holder = (ItemViewHolder) viewHolder;
         Item produto = produtos.get(position);
         produto.setId(position);
 
@@ -139,7 +138,7 @@ public class CarrinhoAdapter extends RecyclerView.Adapter {
         this.editing = editing;
     }
 
-    private void insertDataOnItem(CarrinhoViewHolder holder, Item produto) {
+    private void insertDataOnItem(ItemViewHolder holder, Item produto) {
         Double  dValor = Double.parseDouble(holder.precoE.getText().toString());
         Integer iQtde  = Integer.parseInt  (holder.qtdeE .getText().toString());
 

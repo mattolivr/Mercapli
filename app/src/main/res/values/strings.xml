@@ -10,4 +10,7 @@
     <string name="voltar_compra">Parar de editar?</string>
     <string name="voltar_compra_desc">Suas alterações não serão salvas</string>
 
+    <!-- Lista -->
+    <string name="finalizar_lista">Deseja Finalizar a Lista?</string>
+
 </resources>

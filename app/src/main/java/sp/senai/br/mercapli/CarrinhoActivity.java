@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
 
-import sp.senai.br.mercapli.adapters.CarrinhoAdapter;
+import sp.senai.br.mercapli.adapters.ItemAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.database.CriarBD;
@@ -35,7 +35,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     private ImageButton ibBack;
     private Button btFinalizar, btAdicionar;
 
-    private CarrinhoAdapter adapter;
+    private ItemAdapter adapter;
     private RecyclerView.RecyclerListener recyclerListener;
     private RecyclerView.LayoutManager layoutManager;
 
@@ -61,7 +61,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         btAdicionar      = findViewById(R.id.btnCarrinhoAdicionar);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new CarrinhoAdapter(this);
+        adapter  = new ItemAdapter(this);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
         recyclerListener = holder -> {

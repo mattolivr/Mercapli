@@ -35,6 +35,8 @@ public class CriarBD extends SQLiteOpenHelper {
 
         sqLiteDatabase.execSQL("CREATE TABLE lista(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "lista_valTot DOUBLE NOT NULL," +
+                "lista_data LONG NOT NULL," +
                 "lista_local VARCHAR(50)," +
                 "lista_titulo VARCHAR(50));");
     }

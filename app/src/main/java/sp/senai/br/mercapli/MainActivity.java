@@ -34,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this,  R.id.fragment);
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
-//        CriarBD criarBD = new CriarBD(getApplicationContext());
+        CriarBD criarBD = new CriarBD(getApplicationContext());
+//        criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
 //        criarBD.reset(criarBD.getReadableDatabase());
 
     }
