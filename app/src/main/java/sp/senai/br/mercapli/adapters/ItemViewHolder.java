@@ -2,6 +2,8 @@ package sp.senai.br.mercapli.adapters;
 
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -25,6 +27,8 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     final Button btnPrdEdtAdicionar;
     final Button btnPrdEdtCancelar;
     final Button btnPrdEdtExcluir;
+    final ImageButton fotoProdutoEdit;
+    final ImageView fotoProdutoLayout;
 
 
     public ItemViewHolder(View view) {
@@ -45,5 +49,9 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         btnPrdEdtAdicionar = (Button) view.findViewById(R.id.btnPrdEdtAdicionar);
         btnPrdEdtCancelar  = (Button) view.findViewById(R.id.btnPrdEdtCancelar );
         btnPrdEdtExcluir   = (Button) view.findViewById(R.id.btnPrdEdtExcluir  );
+
+        fotoProdutoEdit = (ImageButton) view.findViewById(R.id.foto_produto_edit);
+
+        fotoProdutoLayout = (ImageView) view.findViewById(R.id.foto_produto_layout);
     }
 }

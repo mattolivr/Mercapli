@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
@@ -13,6 +15,8 @@ import java.util.List;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Item;
+import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
+import sp.senai.br.mercapli.dialogs.FotoProdutoDialog;
 
 import static sp.senai.br.mercapli.Constant.PROD_EDIT;
 import static sp.senai.br.mercapli.Constant.PROD_VIEW;
@@ -22,10 +26,12 @@ public class ItemAdapter extends RecyclerView.Adapter {
     private List<Item> produtos = new ArrayList<>();
     private Context context;
     private Boolean editing;
+    private FragmentManager fragmentManager;
 
-    public ItemAdapter(Context context) {
+    public ItemAdapter(Context context, FragmentManager fragmentManager) {
         this.context = context;
         this.editing = false;
+        this.fragmentManager = fragmentManager;
     }
 
     @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -79,6 +85,11 @@ public class ItemAdapter extends RecyclerView.Adapter {
                 holder.qtdeE.setText((produto.getQuantidade() > 0)?"" + produto.getQuantidade():"");
 
                 // Ouvir ação dos Botões
+                holder.fotoProdutoEdit.setOnClickListener(view -> {
+                    DialogFragment dfadicionarfotoproduto = new FotoProdutoDialog();
+                    dfadicionarfotoproduto.show(fragmentManager, "adicionarFotoProduto");
+                });
+
                 holder.btnPrdEdtAdicionar.setOnClickListener(view -> {
                     produto.setTypeView(PROD_VIEW);
 

@@ -52,7 +52,7 @@ public class ListaActivity extends AppCompatActivity {
         rvItens = findViewById(R.id.rvListaViewItens);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new ItemAdapter(this);
+        adapter  = new ItemAdapter(this, this.getSupportFragmentManager());
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         newLista = new Lista();
