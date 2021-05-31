@@ -41,10 +41,10 @@ public class CompraFragment extends Fragment {
 
     private SQLiteDatabase database;
 
-    DrawerLayout drawerLayoutCompra;
-    ImageButton imageMenuCompra;
-    NavigationView navigationViewCompra;
-    NavController navControllerCompra;
+    private DrawerLayout drawerLayoutCompra;
+    private ImageButton imageMenuCompra;
+    private NavigationView navigationViewCompra;
+    private NavController navControllerCompra;
 
     public CompraFragment() {
         // Required empty public constructor
@@ -75,29 +75,27 @@ public class CompraFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_compra, container, false);
 
+        rvCompras = view.findViewById(R.id.rvCompraItens);
+
+        btnAdicionarCompra = view.findViewById(R.id.btnCompraAdd);
+        tvValorTotal = view.findViewById(R.id.tvCompraValorTotal);
+
         drawerLayoutCompra = view.findViewById(R.id.drawerLayoutCompra);
         imageMenuCompra = view.findViewById(R.id.ibCompraMenu);
         navigationViewCompra = view.findViewById(R.id.navigationViewCompra);
         navControllerCompra = Navigation.findNavController(getActivity(), R.id.fragment);
 
-        imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
-
-        NavigationUI.setupWithNavController(navigationViewCompra, navControllerCompra);
-
         compraAdapter = new CompraAdapter(this.getContext());
-
-        rvCompras = view.findViewById(R.id.rvCompraItens);
-        btnAdicionarCompra = view.findViewById(R.id.btnCompraAdd);
-        tvValorTotal = view.findViewById(R.id.tvCompraValorTotal);
-
         compraLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
-        RecyclerView.LayoutManager verticalLayoutManager = compraLayoutManager;
         database = new CriarBD(view.getContext()).getReadableDatabase();
 
         rvCompras.setAdapter(compraAdapter);
-        rvCompras.setLayoutManager(verticalLayoutManager);
+        rvCompras.setLayoutManager(compraLayoutManager);
+
+        NavigationUI.setupWithNavController(navigationViewCompra, navControllerCompra);
 
         btnAdicionarCompra.setOnClickListener(view1 -> adicionarCompra());
+        imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
         getCompras();
         atualizarGastos();

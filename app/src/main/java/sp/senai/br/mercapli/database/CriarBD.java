@@ -4,6 +4,10 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.util.ArrayList;
+
+import sp.senai.br.mercapli.R;
+
 public class CriarBD extends SQLiteOpenHelper {
 
     public static int VERSAO = 1;
@@ -39,6 +43,10 @@ public class CriarBD extends SQLiteOpenHelper {
                 "lista_data LONG NOT NULL," +
                 "lista_local VARCHAR(50)," +
                 "lista_titulo VARCHAR(50));");
+
+        sqLiteDatabase.execSQL("CREATE TABLE imagem(" +
+                "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
+                "img_id INTEGER NOT NULL);");
     }
 
     @Override
@@ -46,13 +54,12 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS item");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS compra");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS lista");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS imagem");
 
         onCreate(sqLiteDatabase);
     }
 
-    public void reset(SQLiteDatabase sqLiteDatabase) {
-        String where = "_id IS NOT NULL";
-        sqLiteDatabase.delete("compra", where, null);
-        sqLiteDatabase.delete("item", where, null);
+    private void insertDefaultImages(){
+
     }
 }

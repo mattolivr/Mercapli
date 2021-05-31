@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sp.senai.br.mercapli.classes.Item;
+import sp.senai.br.mercapli.classes.Lista;
 
 public class ListaAdapter extends RecyclerView.Adapter {
 
-    private List<Item> itens = new ArrayList<>();
-
+    private List<Lista> listas = new ArrayList<>();
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,4 +28,8 @@ public class ListaAdapter extends RecyclerView.Adapter {
     public int getItemCount() {
         return 0;
     }
+
+    public void addLista(Lista lista){this.listas.add(lista);}
+
+    public void resetListas(){this.listas.clear();}
 }

@@ -23,9 +23,7 @@ import static sp.senai.br.mercapli.Constant.GASTO_TOTAL;
 
 public class DashboardFragment extends Fragment {
 
-    public DashboardFragment() {
-
-    }
+    public DashboardFragment() {}
 
     public static DashboardFragment newInstance() {
         DashboardFragment fragment = new DashboardFragment();
