@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import sp.senai.br.mercapli.R;
 
-public class CompraViewHolder extends RecyclerView.ViewHolder {
+public class CompraListaViewHolder extends RecyclerView.ViewHolder {
     final ConstraintLayout clLayout;
 //    final TextView id;
     final TextView valor;
@@ -16,7 +16,7 @@ public class CompraViewHolder extends RecyclerView.ViewHolder {
     final TextView data;
     final TextView titulo;
 
-    public CompraViewHolder(View view) {
+    public CompraListaViewHolder(View view) {
         super(view);
         clLayout = (ConstraintLayout) view.findViewById(R.id.clCompras);
 //        id     = (TextView) view.findViewById(R.id.tvCompraID    );

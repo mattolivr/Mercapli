@@ -11,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import sp.senai.br.mercapli.CarrinhoActivity;
-import sp.senai.br.mercapli.CompraFragment;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
 
@@ -34,12 +32,12 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
         view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_compra, parent, false);
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-        return new CompraViewHolder(view);
+        return new CompraListaViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
-        CompraViewHolder holder = (CompraViewHolder) viewHolder;
+        CompraListaViewHolder holder = (CompraListaViewHolder) viewHolder;
         Compra compra = compras.get(position);
 
         // TODO: utilizar ID ao invés de Data
@@ -55,7 +53,6 @@ public class CompraAdapter extends RecyclerView.Adapter {
         if(holder.local.getText() .equals("")) holder.local .setHeight(1);
 
         holder.clLayout.setOnClickListener(view -> {
-            System.out.println(compra.getTitulo());
             Intent it = new Intent(context, CarrinhoActivity.class);
             it.putExtra("newParam", false);
             it.putExtra("compraData", compra.getData());

@@ -67,7 +67,7 @@ public class ListaFragment extends Fragment {
         navigationViewLista = view.findViewById(R.id.navigationViewLista);
         navControllerLista = Navigation.findNavController(getActivity(), R.id.fragment);
 
-        listaAdapter = new ListaAdapter();
+        listaAdapter = new ListaAdapter(this.getContext());
         listaLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
 
         database = new CriarBD(view.getContext()).getReadableDatabase();
@@ -80,7 +80,14 @@ public class ListaFragment extends Fragment {
         btAdd.setOnClickListener(add -> adicionarLista());
         imageMenuLista.setOnClickListener(open -> drawerLayoutLista.openDrawer(GravityCompat.START));
 
+        getListas();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getListas();
     }
 
     private void adicionarLista(){
