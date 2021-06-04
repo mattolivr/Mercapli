@@ -2,12 +2,15 @@ package sp.senai.br.mercapli;
 
 import android.os.Bundle;
 
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import sp.senai.br.mercapli.dialogs.UsuarioMetaDialog;
 
 import static sp.senai.br.mercapli.Constant.META_GASTOS;
 
@@ -38,7 +41,8 @@ public class UserFragment extends Fragment {
 
 
         btnAlterarMeta.setOnClickListener(alterarMeta -> {
-
+            DialogFragment dfAlterarMeta = new UsuarioMetaDialog();
+            dfAlterarMeta.show(this.getParentFragmentManager(), "alterarMeta");
         });
         return view;
     }
