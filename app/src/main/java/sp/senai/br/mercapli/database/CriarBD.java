@@ -47,6 +47,12 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE imagem(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
                 "img_id INTEGER NOT NULL);");
+
+        sqLiteDatabase.execSQL("CREATE TABLE meta(" +
+                "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+                "meta_valor DOUBLE NOT NULL," +
+                "meta_cria LONG NOT NULL," +
+                "meta_excl LONG NOT NULL)");
     }
 
     @Override
@@ -55,6 +61,7 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS compra");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS lista");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS imagem");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS meta");
 
         onCreate(sqLiteDatabase);
     }

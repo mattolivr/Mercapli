@@ -19,7 +19,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 
-import static sp.senai.br.mercapli.Constant.GASTO_TOTAL;
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 
 public class DashboardFragment extends Fragment {
 

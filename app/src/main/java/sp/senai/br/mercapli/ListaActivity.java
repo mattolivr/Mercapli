@@ -19,7 +19,7 @@ import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.ListaDialog;
 
-import static sp.senai.br.mercapli.Constant.PROD_EDIT;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
 
 public class ListaActivity extends AppCompatActivity {
 

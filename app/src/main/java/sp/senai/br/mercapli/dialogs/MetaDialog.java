@@ -2,25 +2,28 @@ package sp.senai.br.mercapli.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
+import sp.senai.br.mercapli.classes.Meta;
+import sp.senai.br.mercapli.exceptions.MetaInputException;
 
-import static sp.senai.br.mercapli.Constant.META_GASTOS;
+import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 
-public class UsuarioMetaDialog extends DialogFragment {
+public class MetaDialog extends DialogFragment {
 
-    public UsuarioMetaDialog() {
+    private SQLiteDatabase database;
 
+    public MetaDialog(SQLiteDatabase database) {
+        this.database = database;
     }
 
     @Override
@@ -35,10 +38,19 @@ public class UsuarioMetaDialog extends DialogFragment {
 
         btCancelar.setOnClickListener(cancelar -> this.dismiss());
         btEnviar.setOnClickListener(enviar -> {
-            if(!etValor.getText().equals("") && Double.parseDouble(etValor.getText().toString()) > 0.0){
-                META_GASTOS.setValor(Double.parseDouble(etValor.getText().toString()));
+
+            META_GASTOS.salvarMeta(database);
+
+            try {
+                // TODO: Finalizar meta com problema
+                META_GASTOS.finalizarMeta();
+                META_GASTOS = new Meta(Double.parseDouble(etValor.getText().toString()));
+                META_GASTOS.salvarMeta(database);
+                this.dismiss();
+
+            } catch (MetaInputException e){
+                Toast.makeText(super.getContext(), e.toString(), Toast.LENGTH_LONG).show();
             }
-            this.dismiss();
         });
 
         builder.setView(view);

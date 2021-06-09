@@ -28,7 +28,7 @@ import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.database.CriarBD;
 
-import static sp.senai.br.mercapli.Constant.GASTO_TOTAL;
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 
 public class CompraFragment extends Fragment {
 

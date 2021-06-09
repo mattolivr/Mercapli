@@ -2,11 +2,10 @@ package sp.senai.br.mercapli;
 
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +23,9 @@ import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.CarrinhoBackDialog;
 import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
 
-import static sp.senai.br.mercapli.Constant.PROD_EDIT;
-import static sp.senai.br.mercapli.Constant.PROD_VIEW;
+import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_VIEW;
 
 public class CarrinhoActivity extends AppCompatActivity {
 
@@ -36,6 +36,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     private RecyclerView rvCompraProdutos;
     private ImageButton ibBack;
     private Button btFinalizar, btAdicionar;
+    private ProgressBar pbMeta;
 
     private ItemAdapter adapter;
     private RecyclerView.RecyclerListener recyclerListener;
@@ -61,6 +62,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         ibBack           = findViewById(R.id.ibCarrinhoBack);
         btFinalizar      = findViewById(R.id.btnCarrinhoFinalizar);
         btAdicionar      = findViewById(R.id.btnCarrinhoAdicionar);
+        pbMeta           = findViewById(R.id.pbCarrinhoMeta);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
         adapter  = new ItemAdapter(this, this.getSupportFragmentManager());
@@ -69,6 +71,8 @@ public class CarrinhoActivity extends AppCompatActivity {
         recyclerListener = holder -> {
             if(tvValorTotal != null){
                 atualizarValorTotal();
+                atualizarProgressoMeta();
+                verificarMeta();
             }
         };
 
@@ -155,5 +159,17 @@ public class CarrinhoActivity extends AppCompatActivity {
             DialogFragment dfcancelarCompra = new CarrinhoBackDialog();
             dfcancelarCompra.show(getSupportFragmentManager(), "carrinhoVoltar");
         }
+    }
+    
+    private void verificarMeta(){
+        if(adapter.getValorTotal() > META_GASTOS.getValor() - 200 && adapter.getValorTotal() < META_GASTOS.getValor()){
+            Toast.makeText(this, "Você está quase excedendo sua meta de gastos!", Toast.LENGTH_SHORT).show();
+        } else if (adapter.getValorTotal() > META_GASTOS.getValor()){
+            Toast.makeText(this, "Sua compra excede sua meta de gastos! \n Tente remover alguns itens do carrinho", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void atualizarProgressoMeta(){
+        pbMeta.setProgress(META_GASTOS.getValorRestantePorcentagem());
     }
 }

@@ -15,11 +15,10 @@ import java.util.List;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Item;
-import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
 import sp.senai.br.mercapli.dialogs.FotoProdutoDialog;
 
-import static sp.senai.br.mercapli.Constant.PROD_EDIT;
-import static sp.senai.br.mercapli.Constant.PROD_VIEW;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_VIEW;
 
 public class ItemAdapter extends RecyclerView.Adapter {
 
