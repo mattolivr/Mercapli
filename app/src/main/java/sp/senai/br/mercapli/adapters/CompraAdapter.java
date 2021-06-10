@@ -62,7 +62,7 @@ public class CompraAdapter extends RecyclerView.Adapter {
 
     @Override
     public int getItemCount() {
-        return (compras != null)?compras.size():0;
+        return compras.size();
     }
 
     public void addCompra(Compra compra){

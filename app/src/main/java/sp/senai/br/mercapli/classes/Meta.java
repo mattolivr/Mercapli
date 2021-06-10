@@ -72,10 +72,6 @@ public class Meta {
         return (int) Math.ceil((GASTO_TOTAL * 100) / META_GASTOS.getValor());
     }
 
-    public void finalizarMeta(){
-        this.dataExclusao = System.currentTimeMillis();
-    }
-
     public void salvarMeta(SQLiteDatabase database){
         final Cursor metasIguais;
 
@@ -106,6 +102,27 @@ public class Meta {
                 this.setDataExclusao(cursorMetas.getLong(cursorMetas.getColumnIndexOrThrow("meta_excl")));
             } else {
                 throw new MetaException("A Meta de Gastos foi fechada");
+            }
+        } else {
+            throw new MetaException("Não foi encontrada nenhuma meta de gastos");
+        }
+    }
+
+    public void finalizarMetaAnterior(SQLiteDatabase database) throws MetaException {
+        final Cursor cursorMetas;
+
+        ContentValues metaValues = new ContentValues();
+
+        cursorMetas = database.query("meta", null, null, null, null, null, null);
+
+        if(cursorMetas.getCount() > 0){
+            cursorMetas.moveToLast();
+            cursorMetas.moveToPrevious();
+            if(!cursorMetas.isBeforeFirst()){
+                metaValues.put("meta_excl", System.currentTimeMillis());
+                database.update("meta", metaValues, "meta_cria = " + cursorMetas.getLong(cursorMetas.getColumnIndexOrThrow("meta_cria")), null);
+            } else {
+                throw new MetaException("Só existe uma meta");
             }
         } else {
             throw new MetaException("Não foi encontrada nenhuma meta de gastos");

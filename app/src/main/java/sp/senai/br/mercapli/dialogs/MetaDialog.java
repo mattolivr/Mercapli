@@ -14,6 +14,7 @@ import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Meta;
+import sp.senai.br.mercapli.exceptions.MetaException;
 import sp.senai.br.mercapli.exceptions.MetaInputException;
 
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
@@ -42,12 +43,15 @@ public class MetaDialog extends DialogFragment {
             META_GASTOS.salvarMeta(database);
 
             try {
-                // TODO: Finalizar meta com problema
-                META_GASTOS.finalizarMeta();
                 META_GASTOS = new Meta(Double.parseDouble(etValor.getText().toString()));
                 META_GASTOS.salvarMeta(database);
+                try {
+                    META_GASTOS.finalizarMetaAnterior(database);
+                } catch (MetaException e){
+                    e.printStackTrace();
+                    System.out.println("Era pra ter finalizado");
+                }
                 this.dismiss();
-
             } catch (MetaInputException e){
                 Toast.makeText(super.getContext(), e.toString(), Toast.LENGTH_LONG).show();
             }
