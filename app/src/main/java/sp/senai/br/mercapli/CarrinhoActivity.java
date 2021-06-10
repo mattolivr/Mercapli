@@ -22,7 +22,9 @@ import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.CarrinhoBackDialog;
 import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
+import sp.senai.br.mercapli.exceptions.MetaException;
 
+import static sp.senai.br.mercapli.GlobalVariables.ITEM_CARRINHO;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_VIEW;
@@ -65,7 +67,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         pbMeta           = findViewById(R.id.pbCarrinhoMeta);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new ItemAdapter(this, this.getSupportFragmentManager());
+        adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_CARRINHO);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
         recyclerListener = holder -> {
@@ -111,6 +113,8 @@ public class CarrinhoActivity extends AppCompatActivity {
             }
         }
 
+        atualizarProgressoMeta();
+
         rvCompraProdutos.setAdapter(adapter);
         rvCompraProdutos.setLayoutManager(layoutManager);
         rvCompraProdutos.setRecyclerListener(recyclerListener);
@@ -140,6 +144,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         newCompra.setItens(adapter.getProdutos());
         newCompra.setTitulo(etTitulo.getText().toString());
         newCompra.setLocal(etLocal.getText().toString());
+        adapter.resetGastoLocal();
 
         if(isNew){
             // Finalizar compra nova
@@ -153,6 +158,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     private void cancelarCompra() {
+        adapter.resetGastoLocal();
         if(isNew){
             super.onBackPressed();
         } else {
@@ -162,14 +168,21 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
     
     private void verificarMeta(){
-        if(adapter.getValorTotal() > META_GASTOS.getValor() - 200 && adapter.getValorTotal() < META_GASTOS.getValor()){
-            Toast.makeText(this, "Você está quase excedendo sua meta de gastos!", Toast.LENGTH_SHORT).show();
-        } else if (adapter.getValorTotal() > META_GASTOS.getValor()){
-            Toast.makeText(this, "Sua compra excede sua meta de gastos! \n Tente remover alguns itens do carrinho", Toast.LENGTH_SHORT).show();
+        try{
+            if(adapter.getValorTotal() < META_GASTOS.getValor()){
+                if(adapter.getValorTotal() > META_GASTOS.getValor() - (META_GASTOS.getValor() * 0.7)){
+                    throw new MetaException("Você está quase excedendo sua meta de gastos!");
+                }
+            } else {
+                throw new MetaException("Sua compra excede sua meta de gastos!\nTente remover alguns itens do carrinho");
+            }
+        } catch (MetaException e){
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
 
     private void atualizarProgressoMeta(){
         pbMeta.setProgress(META_GASTOS.getValorRestantePorcentagem());
+        System.out.println("Progresso: " + pbMeta.getProgress());
     }
 }

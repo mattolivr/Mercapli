@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         CriarBD criarBD = new CriarBD(getApplicationContext());
-        criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
+//        criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
         database = criarBD.getWritableDatabase();
 
         getDatabaseValues();

@@ -79,11 +79,11 @@ public class UserFragment extends Fragment {
 
     private void setComponentsValues() {
         tvUsername.setText("Olá, " + USER_NAME + "!");
-        pbMeta.setProgress(5);
+        pbMeta.setProgress(META_GASTOS.getValorRestantePorcentagem());
         tvGastos.setText(DecimalFormat.getCurrencyInstance().format(GASTO_TOTAL));
         tvMeta.setText(String.valueOf(DecimalFormat.getCurrencyInstance().format(META_GASTOS.getValor())));
 
-        if(META_GASTOS.getValorRestante() < 200 && META_GASTOS.getValorRestante() > 0)
+        if(META_GASTOS.getValorRestante() < META_GASTOS.getValor() * 0.3 && META_GASTOS.getValorRestante() > 0)
             tvStatus.setText("Você está prestes a exceder sua meta de gastos!");
         else
             tvStatus.setText("");

@@ -17,20 +17,24 @@ import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.dialogs.FotoProdutoDialog;
 
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_LOCAL;
+import static sp.senai.br.mercapli.GlobalVariables.ITEM_CARRINHO;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_VIEW;
 
 public class ItemAdapter extends RecyclerView.Adapter {
 
     private List<Item> produtos = new ArrayList<>();
+    private int listType;
     private Context context;
     private Boolean editing;
     private FragmentManager fragmentManager;
 
-    public ItemAdapter(Context context, FragmentManager fragmentManager) {
+    public ItemAdapter(Context context, FragmentManager fragmentManager, int listType) {
         this.context = context;
         this.editing = false;
         this.fragmentManager = fragmentManager;
+        this.listType = listType;
     }
 
     @Override public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -96,6 +100,10 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
                     this.notifyItemChanged(position);
                     this.setEditing(false);
+
+                    if(listType == ITEM_CARRINHO){
+                        GASTO_LOCAL += produto.getValorFinal();
+                    }
                 });
 
                 holder.btnPrdEdtCancelar.setOnClickListener(view -> {
@@ -108,6 +116,10 @@ public class ItemAdapter extends RecyclerView.Adapter {
                     produtos.remove(position);
                     this.notifyItemRemoved(position);
                     this.setEditing(false);
+
+                    if(listType == ITEM_CARRINHO){
+                        GASTO_LOCAL -= produto.getValorFinal();
+                    }
                 });
                 break;
         }
@@ -156,5 +168,9 @@ public class ItemAdapter extends RecyclerView.Adapter {
         produto.setValor(dValor);
 //                    produto.setCategoria(holder.catE.toString());
         produto.setQuantidade(iQtde);
+    }
+
+    public void resetGastoLocal(){
+        GASTO_LOCAL = 0.0;
     }
 }

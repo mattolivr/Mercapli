@@ -19,6 +19,7 @@ import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.ListaDialog;
 
+import static sp.senai.br.mercapli.GlobalVariables.ITEM_LISTA;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
 
 public class ListaActivity extends AppCompatActivity {
@@ -52,7 +53,7 @@ public class ListaActivity extends AppCompatActivity {
         rvItens = findViewById(R.id.rvListaViewItens);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new ItemAdapter(this, this.getSupportFragmentManager());
+        adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         newLista = new Lista();

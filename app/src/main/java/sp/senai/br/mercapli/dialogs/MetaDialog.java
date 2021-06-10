@@ -45,12 +45,7 @@ public class MetaDialog extends DialogFragment {
             try {
                 META_GASTOS = new Meta(Double.parseDouble(etValor.getText().toString()));
                 META_GASTOS.salvarMeta(database);
-                try {
-                    META_GASTOS.finalizarMetaAnterior(database);
-                } catch (MetaException e){
-                    e.printStackTrace();
-                    System.out.println("Era pra ter finalizado");
-                }
+                META_GASTOS.finalizarMetaAnterior(database);
                 this.dismiss();
             } catch (MetaInputException e){
                 Toast.makeText(super.getContext(), e.toString(), Toast.LENGTH_LONG).show();

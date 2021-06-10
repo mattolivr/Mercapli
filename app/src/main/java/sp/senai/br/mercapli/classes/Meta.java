@@ -9,6 +9,7 @@ import androidx.fragment.app.DialogFragment;
 import sp.senai.br.mercapli.exceptions.MetaException;
 import sp.senai.br.mercapli.exceptions.MetaInputException;
 
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_LOCAL;
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 
@@ -67,9 +68,8 @@ public class Meta {
     }
 
     public int getValorRestantePorcentagem(){
-        // TODO: Ta funfando não kk
-        System.out.println("Meta Porcentagem: " + Math.ceil((GASTO_TOTAL * 100) / META_GASTOS.getValor()) + "%");
-        return (int) Math.ceil((GASTO_TOTAL * 100) / META_GASTOS.getValor());
+        System.out.println("Meta Porcentagem: " + Math.round((GASTO_TOTAL * 100) / META_GASTOS.getValor()) + "%");
+        return (int) Math.round((GASTO_TOTAL + GASTO_LOCAL * 100) / META_GASTOS.getValor());
     }
 
     public void salvarMeta(SQLiteDatabase database){
@@ -108,7 +108,7 @@ public class Meta {
         }
     }
 
-    public void finalizarMetaAnterior(SQLiteDatabase database) throws MetaException {
+    public void finalizarMetaAnterior(SQLiteDatabase database) {
         final Cursor cursorMetas;
 
         ContentValues metaValues = new ContentValues();
@@ -121,11 +121,7 @@ public class Meta {
             if(!cursorMetas.isBeforeFirst()){
                 metaValues.put("meta_excl", System.currentTimeMillis());
                 database.update("meta", metaValues, "meta_cria = " + cursorMetas.getLong(cursorMetas.getColumnIndexOrThrow("meta_cria")), null);
-            } else {
-                throw new MetaException("Só existe uma meta");
             }
-        } else {
-            throw new MetaException("Não foi encontrada nenhuma meta de gastos");
         }
     }
 }
