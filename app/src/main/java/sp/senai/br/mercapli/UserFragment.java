@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
 
@@ -27,7 +28,7 @@ public class UserFragment extends Fragment {
     private TextView tvUsername;
 
     private TextView tvGastos, tvMeta;
-    private ProgressBar pbMeta;
+    private ProgressBarMeta pbMeta;
     private TextView tvStatus;
     private Button btnAlterarMeta;
 
@@ -54,13 +55,13 @@ public class UserFragment extends Fragment {
 
         tvUsername = view.findViewById(R.id.tvUserUsername);
 
-        pbMeta = view.findViewById(R.id.pbUserMeta);
         tvGastos = view.findViewById(R.id.tvUserMetaValorGasto);
         tvMeta = view.findViewById(R.id.tvUserMetaValorTotal);
         tvStatus = view.findViewById(R.id.tvUserMetaStatus);
         btnAlterarMeta = view.findViewById(R.id.btnUserMeta);
 
         database = new CriarBD(this.getContext()).getWritableDatabase();
+        pbMeta = new ProgressBarMeta(view, R.id.pbUserMeta);
 
         btnAlterarMeta.setOnClickListener(alterarMeta -> {
             DialogFragment dfAlterarMeta = new MetaDialog(database);
@@ -68,6 +69,7 @@ public class UserFragment extends Fragment {
         });
 
         setComponentsValues();
+        atualizarProgressoMeta();
         return view;
     }
 
@@ -75,11 +77,11 @@ public class UserFragment extends Fragment {
     public void onResume() {
         super.onResume();
         setComponentsValues();
+        atualizarProgressoMeta();
     }
 
     private void setComponentsValues() {
         tvUsername.setText("Olá, " + USER_NAME + "!");
-        this.atualizarProgressoMeta();
 
         tvGastos.setText(DecimalFormat.getCurrencyInstance().format(GASTO_TOTAL));
         tvMeta.setText(String.valueOf(DecimalFormat.getCurrencyInstance().format(META_GASTOS.getValor())));
@@ -94,15 +96,6 @@ public class UserFragment extends Fragment {
 
     private void atualizarProgressoMeta(){
         int valorRestante = META_GASTOS.getValorRestantePorcentagem();
-        pbMeta.setProgress(valorRestante);
-
-        if(valorRestante > 0){
-            if(valorRestante < 60)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue_300), android.graphics.PorterDuff.Mode.SRC_IN);
-            else if(valorRestante >= 60 && valorRestante < 85)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.yellow_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-            else
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.red_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-        }
+        pbMeta.atualizar(valorRestante);
     }
 }

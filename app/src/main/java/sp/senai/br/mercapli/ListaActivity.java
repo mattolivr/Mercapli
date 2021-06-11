@@ -19,6 +19,7 @@ import android.widget.Toast;
 import sp.senai.br.mercapli.adapters.ItemAdapter;
 import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.classes.Lista;
+import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.ListaDialog;
 
@@ -33,7 +34,7 @@ public class ListaActivity extends AppCompatActivity {
     private Button btnAddBot, btnFinalizar;
     private ImageButton ibAddTop, ibBack;
     private RecyclerView rvItens;
-    private ProgressBar pbMeta;
+    private ProgressBarMeta pbMeta;
 
     private ItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
@@ -57,8 +58,8 @@ public class ListaActivity extends AppCompatActivity {
         ibAddTop  = findViewById(R.id.ibListaViewAdd    );
         ibBack    = findViewById(R.id.ibListaViewBack   );
         rvItens = findViewById(R.id.rvListaViewItens);
-        pbMeta = findViewById(R.id.pbListaViewMeta);
 
+        pbMeta = new ProgressBarMeta(findViewById(R.id.pbCarrinhoMeta));
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
         adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -110,15 +111,6 @@ public class ListaActivity extends AppCompatActivity {
 
     private void atualizarProgressoMeta(){
         int valorRestante = META_GASTOS.getValorRestantePorcentagem();
-        pbMeta.setProgress(valorRestante);
-
-        if(valorRestante > 0){
-            if(valorRestante < 60)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue_300), android.graphics.PorterDuff.Mode.SRC_IN);
-            else if(valorRestante >= 60 && valorRestante < 85)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.yellow_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-            else
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.red_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-        }
+        pbMeta.atualizar(valorRestante);
     }
 }

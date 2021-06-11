@@ -21,6 +21,7 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 
+import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
@@ -33,7 +34,7 @@ public class DashboardFragment extends Fragment {
     private ImageButton imageMenuDashboard;
     private NavigationView navigationViewDashboard;
     private NavController navControllerDashboard;
-    private ProgressBar pbMeta;
+    private ProgressBarMeta pbMeta;
 
     private SQLiteDatabase database;
 
@@ -61,11 +62,11 @@ public class DashboardFragment extends Fragment {
         imageMenuDashboard = view.findViewById(R.id.ibDashMenu);
         tvGastoTotal = view.findViewById(R.id.tvDashValorTotal);
         navigationViewDashboard = view.findViewById(R.id.navigationViewDashboard);
-        pbMeta = view.findViewById(R.id.pbDashMeta);
 
         navControllerDashboard = Navigation.findNavController(getActivity(), R.id.fragment);
 
         database = new CriarBD(view.getContext()).getReadableDatabase();
+        pbMeta = new ProgressBarMeta(view, R.id.pbDashMeta);
 
         imageMenuDashboard.setOnClickListener(view1 -> drawerLayoutDashboard.openDrawer(GravityCompat.START));
         NavigationUI.setupWithNavController(navigationViewDashboard, navControllerDashboard);
@@ -87,15 +88,6 @@ public class DashboardFragment extends Fragment {
 
     private void atualizarProgressoMeta(){
         int valorRestante = META_GASTOS.getValorRestantePorcentagem();
-        pbMeta.setProgress(valorRestante);
-
-        if(valorRestante > 0){
-            if(valorRestante < 60)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue_300), android.graphics.PorterDuff.Mode.SRC_IN);
-            else if(valorRestante >= 60 && valorRestante < 85)
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.yellow_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-            else
-                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.red_warn), android.graphics.PorterDuff.Mode.SRC_IN);
-        }
+        pbMeta.atualizar(valorRestante);
     }
 }
