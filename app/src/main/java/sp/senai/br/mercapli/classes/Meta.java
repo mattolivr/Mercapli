@@ -69,6 +69,7 @@ public class Meta {
 
     public int getValorRestantePorcentagem(){
         int value = (int) Math.round(((GASTO_TOTAL + GASTO_LOCAL) * 100) / META_GASTOS.getValor());
+        System.out.println("Progresso: " + value);
         return (value < 100)? value: 100;
     }
 

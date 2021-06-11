@@ -187,7 +187,7 @@ public class Compra {
                 updateItem.put("item_nome" , item.getNome());
                 updateItem.put("item_valor", item.getValor());
                 updateItem.put("item_qtde" , item.getQuantidade());
-//                insertItem.put("item_foto", item.getFoto());
+//                updateItem.put("item_foto", item.getFoto());
                 updateItem.put("item_cat"  , "");
                 updateItem.put("comp_id_fk", this.getId());
 

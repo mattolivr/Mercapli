@@ -1,15 +1,18 @@
 package sp.senai.br.mercapli;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +23,7 @@ import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.ListaDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_LISTA;
+import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
 
 public class ListaActivity extends AppCompatActivity {
@@ -29,9 +33,11 @@ public class ListaActivity extends AppCompatActivity {
     private Button btnAddBot, btnFinalizar;
     private ImageButton ibAddTop, ibBack;
     private RecyclerView rvItens;
+    private ProgressBar pbMeta;
 
     private ItemAdapter adapter;
     private RecyclerView.LayoutManager layoutManager;
+    private RecyclerView.RecyclerListener recyclerListener;
 
     private SQLiteDatabase database;
 
@@ -51,6 +57,7 @@ public class ListaActivity extends AppCompatActivity {
         ibAddTop  = findViewById(R.id.ibListaViewAdd    );
         ibBack    = findViewById(R.id.ibListaViewBack   );
         rvItens = findViewById(R.id.rvListaViewItens);
+        pbMeta = findViewById(R.id.pbListaViewMeta);
 
         database = new CriarBD(getApplicationContext()).getWritableDatabase();
         adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
@@ -58,13 +65,20 @@ public class ListaActivity extends AppCompatActivity {
 
         newLista = new Lista();
 
+        recyclerListener = holder -> {
+            atualizarProgressoMeta();
+        };
+
         rvItens.setAdapter(adapter);
         rvItens.setLayoutManager(layoutManager);
+        rvItens.setRecyclerListener(recyclerListener);
 
         btnAddBot.setOnClickListener(adicionar -> adicionarItem());
         ibAddTop .setOnClickListener(adicionar -> adicionarItem());
         btnFinalizar.setOnClickListener(finalizar -> finalizarLista());
         ibBack   .setOnClickListener(voltar -> fecharLista());
+
+        atualizarProgressoMeta();
     }
 
     private void fecharLista(){
@@ -92,5 +106,19 @@ public class ListaActivity extends AppCompatActivity {
 
         DialogFragment dialogFragment = new ListaDialog(newLista, database);
         dialogFragment.show(getSupportFragmentManager(), "lista");
+    }
+
+    private void atualizarProgressoMeta(){
+        int valorRestante = META_GASTOS.getValorRestantePorcentagem();
+        pbMeta.setProgress(valorRestante);
+
+        if(valorRestante > 0){
+            if(valorRestante < 60)
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue_300), android.graphics.PorterDuff.Mode.SRC_IN);
+            else if(valorRestante >= 60 && valorRestante < 85)
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.yellow_warn), android.graphics.PorterDuff.Mode.SRC_IN);
+            else
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.red_warn), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
     }
 }

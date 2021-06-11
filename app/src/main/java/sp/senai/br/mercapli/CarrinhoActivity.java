@@ -186,6 +186,16 @@ public class CarrinhoActivity extends AppCompatActivity {
     }
 
     private void atualizarProgressoMeta(){
-        pbMeta.setProgress(META_GASTOS.getValorRestantePorcentagem());
+        int valorRestante = META_GASTOS.getValorRestantePorcentagem();
+        pbMeta.setProgress(valorRestante);
+
+        if(valorRestante > 0){
+            if(valorRestante < 60)
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.blue_300), android.graphics.PorterDuff.Mode.SRC_IN);
+            else if(valorRestante >= 60 && valorRestante < 85)
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.yellow_warn), android.graphics.PorterDuff.Mode.SRC_IN);
+            else
+                pbMeta.getProgressDrawable().setColorFilter(getResources().getColor(R.color.red_warn), android.graphics.PorterDuff.Mode.SRC_IN);
+        }
     }
 }
