@@ -8,6 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
+
+import sp.senai.br.mercapli.database.CriarBD;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -15,6 +19,8 @@ import android.widget.Button;
  * create an instance of this fragment.
  */
 public class ConfigFragment extends Fragment {
+
+    private ToggleButton tbDeletaBanco;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,9 +56,22 @@ public class ConfigFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_config, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_config, container, false);
 
-    public void deletarBanco(View v){}
+        tbDeletaBanco = view.findViewById(R.id.tbDeletaBanco);
+
+        tbDeletaBanco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    CriarBD criarBD = new CriarBD(getContext());
+                    criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
+                } else {
+
+                }
+            }
+        });
+
+        return view;
+    }
 }
