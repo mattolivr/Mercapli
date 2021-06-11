@@ -32,7 +32,6 @@ public class Compra {
     }
 
     public Compra (SQLiteDatabase database, long data){
-        // TODO: trocar data por id
         final Cursor cursorCompra;
         final Cursor cursorItens;
 
@@ -191,6 +190,8 @@ public class Compra {
 //                insertItem.put("item_foto", item.getFoto());
                 updateItem.put("item_cat"  , "");
                 updateItem.put("comp_id_fk", this.getId());
+
+                database.update("item", updateItem, "comp_id_fk = " + this.getId(), null);
             }
         }
     }

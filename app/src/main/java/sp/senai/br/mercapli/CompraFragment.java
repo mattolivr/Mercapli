@@ -143,16 +143,7 @@ public class CompraFragment extends Fragment {
     }
 
     public void atualizarGastos() {
-        Double dGastos = 0.0;
-
-        if(compraAdapter.getCompras() != null){
-            for(Compra compra : compraAdapter.getCompras()){
-                dGastos += compra.getValorTotal();
-            }
-        }
-
-        GASTO_TOTAL = dGastos;
-        tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(dGastos));
+        tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(GASTO_TOTAL));
     }
 
     public void callCarrinhoActivity() {

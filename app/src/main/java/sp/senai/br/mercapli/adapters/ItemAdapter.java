@@ -102,7 +102,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
                     this.setEditing(false);
 
                     if(listType == ITEM_CARRINHO){
-                        GASTO_LOCAL += produto.getValorFinal();
+                        GASTO_LOCAL = getProdutosSum();
                     }
                 });
 
@@ -118,7 +118,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
                     this.setEditing(false);
 
                     if(listType == ITEM_CARRINHO){
-                        GASTO_LOCAL -= produto.getValorFinal();
+                        GASTO_LOCAL = getProdutosSum();
                     }
                 });
                 break;
@@ -172,5 +172,13 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
     public void resetGastoLocal(){
         GASTO_LOCAL = 0.0;
+    }
+
+    public Double getProdutosSum(){
+        Double sum = 0.0;
+        for (Item produto: produtos) {
+            sum += produto.getValorFinal();
+        }
+        return sum;
     }
 }

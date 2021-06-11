@@ -50,6 +50,12 @@ public class MainActivity extends AppCompatActivity {
         getDatabaseValues();
     }
 
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        refreshDatabaseValues();
+    }
+
     private void getDatabaseValues(){
         Cursor cursorGastos;
         Double valorTotal = 0.0;
@@ -64,6 +70,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Gasto Total
+        if(GASTO_TOTAL == 0.0){
+            cursorGastos = database.query("compra", new String[] {"comp_valTot"}, null, null, null, null, null);
+
+            for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
+                valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("comp_valTot"));
+            }
+
+            GASTO_TOTAL = valorTotal;
+        }
+    }
+
+    private void refreshDatabaseValues(){
+        Cursor cursorGastos;
+        Double valorTotal = 0.0;
+
         cursorGastos = database.query("compra", new String[] {"comp_valTot"}, null, null, null, null, null);
 
         for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){

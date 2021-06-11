@@ -68,7 +68,8 @@ public class Meta {
     }
 
     public int getValorRestantePorcentagem(){
-        return (int) Math.round((GASTO_TOTAL + GASTO_LOCAL * 100) / META_GASTOS.getValor());
+        int value = (int) Math.round(((GASTO_TOTAL + GASTO_LOCAL) * 100) / META_GASTOS.getValor());
+        return (value < 100)? value: 100;
     }
 
     public void salvarMeta(SQLiteDatabase database){

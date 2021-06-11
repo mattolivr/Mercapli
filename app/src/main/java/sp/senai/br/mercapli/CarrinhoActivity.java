@@ -24,6 +24,8 @@ import sp.senai.br.mercapli.dialogs.CarrinhoBackDialog;
 import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
 import sp.senai.br.mercapli.exceptions.MetaException;
 
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_LOCAL;
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_CARRINHO;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
@@ -78,7 +80,6 @@ public class CarrinhoActivity extends AppCompatActivity {
             }
         };
 
-        // TODO: Diálogo -> descartar alterações
         ibBack     .setOnClickListener(back -> cancelarCompra());
         btFinalizar.setOnClickListener(view -> finalizarCompra());
         btAdicionar.setOnClickListener(view -> adicionarProduto());
@@ -90,7 +91,6 @@ public class CarrinhoActivity extends AppCompatActivity {
             tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(0));
             etTitulo.setText("");
             etLocal.setText("");
-
         }else{
             // Vizualização reciclada
             if (compraData > 0){
@@ -105,6 +105,10 @@ public class CarrinhoActivity extends AppCompatActivity {
                     item.setTypeView(PROD_VIEW);
                     adapter.addProduto(item);
                 }
+
+//                GASTO_TOTAL -= adapter.getProdutosSum();
+//                GASTO_LOCAL =  adapter.getProdutosSum();
+
                 tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(newCompra.getValorTotal()));
                 // TODO: opções de edição?
             } else {
@@ -183,6 +187,5 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private void atualizarProgressoMeta(){
         pbMeta.setProgress(META_GASTOS.getValorRestantePorcentagem());
-        System.out.println("Progresso: " + pbMeta.getProgress());
     }
 }
