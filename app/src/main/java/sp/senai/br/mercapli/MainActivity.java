@@ -25,6 +25,7 @@ import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
 import sp.senai.br.mercapli.exceptions.MetaException;
 
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 
 public class MainActivity extends AppCompatActivity {
@@ -50,13 +51,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getDatabaseValues(){
+        Cursor cursorGastos;
+        Double valorTotal = 0.0;
         META_GASTOS = new Meta();
 
+        // Meta
         try {
             META_GASTOS.atualizarMeta(database);
         } catch (MetaException e) {
             DialogFragment dfNovaMeta = new MetaDialog(database);
             dfNovaMeta.show(getSupportFragmentManager(), "MetaNull");
         }
+
+        // Gasto Total
+        cursorGastos = database.query("compra", new String[] {"comp_valTot"}, null, null, null, null, null);
+
+        for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
+            valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("comp_valTot"));
+        }
+
+        GASTO_TOTAL = valorTotal;
     }
 }

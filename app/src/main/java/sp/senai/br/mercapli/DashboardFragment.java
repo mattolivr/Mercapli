@@ -1,5 +1,6 @@
 package sp.senai.br.mercapli;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
 import androidx.core.view.GravityCompat;
@@ -19,9 +20,19 @@ import com.google.android.material.navigation.NavigationView;
 
 import java.text.DecimalFormat;
 
+import sp.senai.br.mercapli.database.CriarBD;
+
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 
 public class DashboardFragment extends Fragment {
+
+    private TextView tvGastoTotal;
+    private DrawerLayout drawerLayoutDashboard;
+    private ImageButton imageMenuDashboard;
+    private NavigationView navigationViewDashboard;
+    private NavController navControllerDashboard;
+
+    private SQLiteDatabase database;
 
     public DashboardFragment() {}
 
@@ -31,13 +42,6 @@ public class DashboardFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-    DrawerLayout drawerLayoutDashboard;
-    ImageButton imageMenuDashboard;
-    NavigationView navigationViewDashboard;
-    NavController navControllerDashboard;
-
-    private TextView tvGastoTotal;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,17 +60,11 @@ public class DashboardFragment extends Fragment {
         navigationViewDashboard = view.findViewById(R.id.navigationViewDashboard);
         navControllerDashboard = Navigation.findNavController(getActivity(), R.id.fragment);
 
-        imageMenuDashboard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                drawerLayoutDashboard.openDrawer(GravityCompat.START);
-            }
-        });
+        database = new CriarBD(view.getContext()).getReadableDatabase();
 
+        imageMenuDashboard.setOnClickListener(view1 -> drawerLayoutDashboard.openDrawer(GravityCompat.START));
         NavigationUI.setupWithNavController(navigationViewDashboard, navControllerDashboard);
 
-        // TODO: Descobrir pq esse TextView ta com frescura
-        atualizarGasto();
         return view;
     }
 

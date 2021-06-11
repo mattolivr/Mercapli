@@ -170,7 +170,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     private void verificarMeta(){
         try{
             if(adapter.getValorTotal() < META_GASTOS.getValor()){
-                if(adapter.getValorTotal() > META_GASTOS.getValor() - (META_GASTOS.getValor() * 0.7)){
+                if(adapter.getValorTotal() > META_GASTOS.getValor() - (META_GASTOS.getValor() * 0.3)){
                     throw new MetaException("Você está quase excedendo sua meta de gastos!");
                 }
             } else {
