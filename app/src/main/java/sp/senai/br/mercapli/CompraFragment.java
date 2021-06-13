@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -46,9 +47,7 @@ public class CompraFragment extends Fragment {
     private NavigationView navigationViewCompra;
     private NavController navControllerCompra;
 
-    public CompraFragment() {
-        // Required empty public constructor
-    }
+    public CompraFragment() {}
 
     public static CompraFragment newInstance() {
         CompraFragment fragment = new CompraFragment();
@@ -64,9 +63,9 @@ public class CompraFragment extends Fragment {
 
     @Override
     public void onResume() {
-        super.onResume();
         getCompras();
         atualizarGastos();
+        super.onResume();
         // TODO: scroll para o topo
     }
 
@@ -103,9 +102,6 @@ public class CompraFragment extends Fragment {
     }
 
     public void adicionarCompra() {
-        Compra newCompra = new Compra();
-
-        compraAdapter.addCompra(newCompra);
         callCarrinhoActivity();
     }
 
@@ -116,15 +112,9 @@ public class CompraFragment extends Fragment {
         cursor = database.query(
                 "compra",
                 new String[]{"_id","comp_local", "comp_titulo", "comp_data", "comp_valTot"},
-                null,
-                null,
-                null,
-                null,
-                null
-        );
+                null, null,null,null,null);
 
         if(cursor.getCount() > 0){
-
             cursor.moveToFirst();
             compraAdapter.resetCompra();
 

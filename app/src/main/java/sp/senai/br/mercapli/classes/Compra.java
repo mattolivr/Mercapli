@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.exceptions.CompraException;
 
 public class Compra {
 
@@ -138,11 +139,15 @@ public class Compra {
         this.titulo = titulo;
     }
 
-    public void finalizarCompra (SQLiteDatabase database) {
+    public void finalizarCompra (SQLiteDatabase database) throws CompraException {
         long dbInsert;
 
         ContentValues insertCompra = new ContentValues();
         ContentValues insertItem   = new ContentValues();
+
+        if(this.getItens().size() == 0){
+            throw new CompraException("Não é possível finalizar uma compra sem produtos");
+        }
 
         insertCompra.put("comp_local",  this.getLocal()     );
         insertCompra.put("comp_titulo", this.getTitulo()    );
@@ -155,19 +160,17 @@ public class Compra {
             this.setId(database, this.getData());
         }
 
-        if(this.getItens().size() > 0){
-            for (int i = 0; i < this.getItens().size(); i++) {
-                Item item = itens.get(i);
+        for (int i = 0; i < this.getItens().size(); i++) {
+            Item item = itens.get(i);
 
-                insertItem.put("item_nome", item.getNome());
-                insertItem.put("item_valor", item.getValor());
-                insertItem.put("item_qtde", item.getQuantidade());
+            insertItem.put("item_nome", item.getNome());
+            insertItem.put("item_valor", item.getValor());
+            insertItem.put("item_qtde", item.getQuantidade());
 //                insertItem.put("item_foto", item.getFoto());
-                insertItem.put("item_cat", "");
-                insertItem.put("comp_id_fk", this.getId());
+            insertItem.put("item_cat", "");
+            insertItem.put("comp_id_fk", this.getId());
 
-                database.insertOrThrow("item", null, insertItem);
-            }
+            database.insertOrThrow("item", null, insertItem);
         }
     }
 
@@ -193,6 +196,27 @@ public class Compra {
 
                 database.update("item", updateItem, "comp_id_fk = " + this.getId(), null);
             }
+        }
+    }
+
+    public void deletarCompra (SQLiteDatabase database) throws CompraException {
+        final Cursor cursorCompras;
+        final Cursor cursorItens;
+
+        cursorCompras = database.query("compra", null, "_id = " + this.getId(), null, null, null, null);
+
+        if(cursorCompras.getCount() == 1) {
+            database.delete("compra", "_id = " + this.getId(), null);
+
+            cursorItens = database.query("item", null, "comp_id_fk = " + this.getId(), null, null, null, null);
+
+            if (cursorItens.getCount() > 0) {
+                for (cursorItens.moveToFirst(); !cursorItens.isAfterLast(); cursorItens.moveToNext()) {
+                    database.delete("item", "comp_id_fk = " + this.getId(), null);
+                }
+            }
+        } else {
+            throw new CompraException("Um erro ocorreu");
         }
     }
 

@@ -21,6 +21,7 @@ import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.dialogs.ListaDeleteDialog;
 import sp.senai.br.mercapli.dialogs.ListaDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_LISTA;
@@ -32,7 +33,7 @@ public class ListaActivity extends AppCompatActivity {
     private TextView tvTitulo;
     private EditText etTitulo, etLocal;
     private Button btnAddBot, btnFinalizar;
-    private ImageButton ibAddTop, ibBack;
+    private ImageButton ibDelete, ibBack;
     private RecyclerView rvItens;
     private ProgressBarMeta pbMeta;
 
@@ -50,21 +51,20 @@ public class ListaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista);
         getSupportActionBar().hide();
 
-        tvTitulo = findViewById(R.id.tvListaViewTitulo);
-        etTitulo = findViewById(R.id.etListaViewTitulo);
-        etLocal  = findViewById(R.id.etListaViewLocal );
-        btnAddBot = findViewById(R.id.btnListaViewAddBot);
+        tvTitulo     = findViewById(R.id.tvListaViewTitulo);
+        etTitulo     = findViewById(R.id.etListaViewTitulo);
+        etLocal      = findViewById(R.id.etListaViewLocal );
+        btnAddBot    = findViewById(R.id.btnListaViewAddBot);
         btnFinalizar = findViewById(R.id.btnListaViewFinalizar);
-        ibAddTop  = findViewById(R.id.ibListaViewAdd    );
-        ibBack    = findViewById(R.id.ibListaViewBack   );
-        rvItens = findViewById(R.id.rvListaViewItens);
+        ibDelete     = findViewById(R.id.ibListaViewAdd    );
+        ibBack       = findViewById(R.id.ibListaViewBack   );
+        rvItens      = findViewById(R.id.rvListaViewItens);
 
-        pbMeta = new ProgressBarMeta(findViewById(R.id.pbCarrinhoMeta));
-        database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-
-        newLista = new Lista();
+        pbMeta         = new ProgressBarMeta(findViewById(R.id.pbListaViewMeta));
+        database       = new CriarBD(getApplicationContext()).getWritableDatabase();
+        adapter        = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
+        layoutManager  = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        newLista       = new Lista();
 
         recyclerListener = holder -> {
             atualizarProgressoMeta();
@@ -74,16 +74,12 @@ public class ListaActivity extends AppCompatActivity {
         rvItens.setLayoutManager(layoutManager);
         rvItens.setRecyclerListener(recyclerListener);
 
-        btnAddBot.setOnClickListener(adicionar -> adicionarItem());
-        ibAddTop .setOnClickListener(adicionar -> adicionarItem());
+        btnAddBot   .setOnClickListener(adicionar -> adicionarItem());
+        ibDelete    .setOnClickListener(deletar   -> deletarLista());
         btnFinalizar.setOnClickListener(finalizar -> finalizarLista());
-        ibBack   .setOnClickListener(voltar -> fecharLista());
+        ibBack      .setOnClickListener(voltar    -> super.onBackPressed());
 
         atualizarProgressoMeta();
-    }
-
-    private void fecharLista(){
-        super.onBackPressed();
     }
 
     private void adicionarItem(){
@@ -107,6 +103,11 @@ public class ListaActivity extends AppCompatActivity {
 
         DialogFragment dialogFragment = new ListaDialog(newLista, database);
         dialogFragment.show(getSupportFragmentManager(), "lista");
+    }
+
+    private void deletarLista(){
+        DialogFragment dfDeletarLista = new ListaDeleteDialog(newLista, database);
+        dfDeletarLista.show(getSupportFragmentManager(), "listaDeletar");
     }
 
     private void atualizarProgressoMeta(){

@@ -5,18 +5,20 @@ import android.app.Dialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
+import sp.senai.br.mercapli.exceptions.CompraException;
 
-public class CarrinhoDialog extends DialogFragment {
+public class CarrinhoSaveDialog extends DialogFragment {
 
     private Compra compra;
     private SQLiteDatabase database;
 
-    public CarrinhoDialog (Compra compra, SQLiteDatabase database) {
+    public CarrinhoSaveDialog(Compra compra, SQLiteDatabase database) {
         this.compra = compra;
         this.database = database;
     }
@@ -26,8 +28,14 @@ public class CarrinhoDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.finalizar_compra)
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
-                    compra.finalizarCompra(database);
-                    getActivity().onBackPressed();
+                    try {
+                        compra.finalizarCompra(database);
+                        getActivity().onBackPressed();
+                    }
+                    catch (CompraException e){
+                        Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
+                        this.dismiss();
+                    }
                 })
                 .setNegativeButton(R.string.nao, ((dialogInterface, i) -> {
                     this.dismiss();

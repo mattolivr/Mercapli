@@ -22,7 +22,7 @@ public class ProgressBarMeta {
 
         if(progresso > 0){
             if(progresso < 60)
-                progressBar.getProgressDrawable().setColorFilter(Color.CYAN, PorterDuff.Mode.SRC_IN);
+                progressBar.getProgressDrawable().setColorFilter(Color.BLUE, PorterDuff.Mode.SRC_IN);
             else if(progresso >= 60 && progresso < 85)
                 progressBar.getProgressDrawable().setColorFilter(Color.YELLOW, PorterDuff.Mode.SRC_IN);
             else

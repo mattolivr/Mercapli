@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
+import sp.senai.br.mercapli.exceptions.CompraException;
+import sp.senai.br.mercapli.exceptions.ListaException;
+
 public class Lista {
 
     private int id;
@@ -124,6 +127,27 @@ public class Lista {
 
                 database.insertOrThrow("item", null, insertItem);
             }
+        }
+    }
+
+    public void deletarLista(SQLiteDatabase database) throws ListaException {
+        final Cursor cursorListas;
+        final Cursor cursorItens;
+
+        cursorListas = database.query("lista", null, "_id = " + this.getId(), null, null, null, null);
+
+        if(cursorListas.getCount() == 1) {
+            database.delete("lista", "_id = " + this.getId(), null);
+
+            cursorItens = database.query("item", null, "lista_id_fk = " + this.getId(), null, null, null, null);
+
+            if (cursorItens.getCount() > 0) {
+                for (cursorItens.moveToFirst(); !cursorItens.isAfterLast(); cursorItens.moveToNext()) {
+                    database.delete("item", "lista_id_fk = " + this.getId(), null);
+                }
+            }
+        } else {
+            throw new ListaException("Um erro ocorreu");
         }
     }
 

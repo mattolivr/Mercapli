@@ -1,25 +1,17 @@
 package sp.senai.br.mercapli;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
-import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.io.File;
-
-import sp.senai.br.mercapli.adapters.CompraAdapter;
-import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Meta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
@@ -51,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onPostResume() {
-        super.onPostResume();
+    protected void onResume() {
         refreshDatabaseValues();
+        super.onResume();
     }
 
     private void getDatabaseValues(){

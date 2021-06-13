@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,11 +21,10 @@ import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.CarrinhoBackDialog;
-import sp.senai.br.mercapli.dialogs.CarrinhoDialog;
+import sp.senai.br.mercapli.dialogs.CarrinhoDeleteDialog;
+import sp.senai.br.mercapli.dialogs.CarrinhoSaveDialog;
 import sp.senai.br.mercapli.exceptions.MetaException;
 
-import static sp.senai.br.mercapli.GlobalVariables.GASTO_LOCAL;
-import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_CARRINHO;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
@@ -39,7 +37,7 @@ public class CarrinhoActivity extends AppCompatActivity {
     private TextView tvValorTotal;
     private EditText etTitulo, etLocal;
     private RecyclerView rvCompraProdutos;
-    private ImageButton ibBack;
+    private ImageButton ibBack, ibExcluir;
     private Button btFinalizar, btAdicionar;
     private ProgressBarMeta pbMeta;
 
@@ -65,6 +63,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         etLocal          = findViewById(R.id.etCarrinhoLocal);
         rvCompraProdutos = findViewById(R.id.rvCarrinhoProdutos);
         ibBack           = findViewById(R.id.ibCarrinhoBack);
+        ibExcluir        = findViewById(R.id.ibCarrinhoDeleteCompra);
         btFinalizar      = findViewById(R.id.btnCarrinhoFinalizar);
         btAdicionar      = findViewById(R.id.btnCarrinhoAdicionar);
 
@@ -82,6 +81,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         };
 
         ibBack     .setOnClickListener(back -> cancelarCompra());
+        ibExcluir  .setOnClickListener(excl -> deletarCompra());
         btFinalizar.setOnClickListener(view -> finalizarCompra());
         btAdicionar.setOnClickListener(view -> adicionarProduto());
 
@@ -111,7 +111,6 @@ public class CarrinhoActivity extends AppCompatActivity {
 //                GASTO_LOCAL =  adapter.getProdutosSum();
 
                 tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(newCompra.getValorTotal()));
-                // TODO: opções de edição?
             } else {
                 super.onBackPressed();
                 Toast.makeText(super.getApplicationContext(), "Algo deu Errado!", Toast.LENGTH_SHORT).show();
@@ -153,7 +152,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         if(isNew){
             // Finalizar compra nova
-            DialogFragment dffinalizarCompra = new CarrinhoDialog(newCompra, database);
+            DialogFragment dffinalizarCompra = new CarrinhoSaveDialog(newCompra, database);
             dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
         } else {
             // Finalizar alterações
@@ -170,6 +169,11 @@ public class CarrinhoActivity extends AppCompatActivity {
             DialogFragment dfcancelarCompra = new CarrinhoBackDialog();
             dfcancelarCompra.show(getSupportFragmentManager(), "carrinhoVoltar");
         }
+    }
+
+    private void deletarCompra() {
+        DialogFragment dfExcluirCompra = new CarrinhoDeleteDialog(newCompra, database, isNew);
+        dfExcluirCompra.show(getSupportFragmentManager(), "carrinhoExcluir");
     }
     
     private void verificarMeta(){

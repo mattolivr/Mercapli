@@ -6,9 +6,10 @@
 
     <!-- DIALOG ALERTS -->
     <!-- Carrinho -->
-    <string name="finalizar_compra">Deseja Finalizar a Compra?</string>
+    <string name="finalizar_compra">Deseja finalizar a compra?</string>
     <string name="voltar_compra">Parar de editar?</string>
     <string name="voltar_compra_desc">Suas alterações não serão salvas</string>
+    <string name="deletar_compra">Deseja apagar essa compra?</string>
 
     <!-- Lista -->
     <string name="finalizar_lista">Deseja Finalizar a Lista?</string>
