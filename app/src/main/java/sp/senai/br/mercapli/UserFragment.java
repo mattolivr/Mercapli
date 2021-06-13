@@ -85,13 +85,7 @@ public class UserFragment extends Fragment {
 
         tvGastos.setText(DecimalFormat.getCurrencyInstance().format(GASTO_TOTAL));
         tvMeta.setText(String.valueOf(DecimalFormat.getCurrencyInstance().format(META_GASTOS.getValor())));
-
-        if(GASTO_TOTAL < META_GASTOS.getValor() * 0.3 && META_GASTOS.getValorRestante() > 0)
-            tvStatus.setText("Você está prestes a exceder sua meta de gastos!");
-        else if(GASTO_TOTAL > META_GASTOS.getValor())
-            tvStatus.setText("Você excedeu sua meta de gastos!");
-        else
-            tvStatus.setText("");
+        tvStatus.setText(META_GASTOS.getStatus());
     }
 
     private void atualizarProgressoMeta(){

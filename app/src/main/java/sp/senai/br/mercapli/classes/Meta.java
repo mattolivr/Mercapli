@@ -67,6 +67,21 @@ public class Meta {
         return this.valor - GASTO_TOTAL;
     }
 
+    public String getStatus(){
+        Double valorTotal = GASTO_TOTAL + GASTO_LOCAL;
+
+        if(valorTotal > 0){
+            if(valorTotal > (META_GASTOS.getValor() - META_GASTOS.getValor() * 0.3) && valorTotal < META_GASTOS.getValor()){
+                return "Você está quase excedendo sua meta de gastos!";
+            } else if (valorTotal >= META_GASTOS.getValor()) {
+                return "Você excedeu sua meta de gastos!";
+            } else {
+                return "";
+            }
+        } else
+            return "";
+    }
+
     public int getValorRestantePorcentagem(){
         int value = (int) Math.round(((GASTO_TOTAL + GASTO_LOCAL) * 100) / META_GASTOS.getValor());
         System.out.println("Progresso: " + value);
