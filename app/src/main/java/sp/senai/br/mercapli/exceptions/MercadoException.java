@@ -1,11 +1,11 @@
 package sp.senai.br.mercapli.exceptions;
 
 
-public class CompraException extends Exception {
+public class MercadoException extends Exception {
 
     private String error;
 
-    public CompraException (String error) {
+    public MercadoException(String error) {
         this.error = error;
     }
 

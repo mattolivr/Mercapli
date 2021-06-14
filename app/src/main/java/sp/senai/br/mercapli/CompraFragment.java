@@ -109,10 +109,7 @@ public class CompraFragment extends Fragment {
 
         final Cursor cursor;
 
-        cursor = database.query(
-                "compra",
-                new String[]{"_id","comp_local", "comp_titulo", "comp_data", "comp_valTot"},
-                null, null,null,null,null);
+        cursor = database.query("compra", null,null, null,null,null,null);
 
         if(cursor.getCount() > 0){
             cursor.moveToFirst();
@@ -121,10 +118,10 @@ public class CompraFragment extends Fragment {
             for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
                 Compra newCompra = new Compra();
 
-                newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("comp_titulo")));
-                newCompra.setLocal (cursor.getString(cursor.getColumnIndexOrThrow("comp_local" )));
-                newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("comp_valTot")));
-                newCompra.setData(cursor.getLong(cursor.getColumnIndexOrThrow("comp_data")));
+                newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("_titulo")));
+                newCompra.setLocal (cursor.getString(cursor.getColumnIndexOrThrow("_local" )));
+                newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("_valTot")));
+                newCompra.setData(cursor.getLong(cursor.getColumnIndexOrThrow("_data")));
 
                 compraAdapter.addCompra(newCompra);
             }

@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
         CriarBD criarBD = new CriarBD(getApplicationContext());
-//        criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
+        criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
         database = criarBD.getWritableDatabase();
 
         getDatabaseValues();
@@ -63,10 +63,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Gasto Total
         if(GASTO_TOTAL == 0.0){
-            cursorGastos = database.query("compra", new String[] {"comp_valTot"}, null, null, null, null, null);
+            cursorGastos = database.query("compra", null, null, null, null, null, null);
 
             for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
-                valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("comp_valTot"));
+                valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("_valTot"));
             }
 
             GASTO_TOTAL = valorTotal;
@@ -77,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursorGastos;
         Double valorTotal = 0.0;
 
-        cursorGastos = database.query("compra", new String[] {"comp_valTot"}, null, null, null, null, null);
+        cursorGastos = database.query("compra", null, null, null, null, null, null);
 
         for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
-            valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("comp_valTot"));
+            valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("_valTot"));
         }
 
         GASTO_TOTAL = valorTotal;

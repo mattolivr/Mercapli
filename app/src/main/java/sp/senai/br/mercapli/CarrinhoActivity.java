@@ -156,7 +156,7 @@ public class CarrinhoActivity extends AppCompatActivity {
             dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
         } else {
             // Finalizar alterações
-            newCompra.atualizarCompra(database);
+            newCompra.atualizar(database);
             super.onBackPressed();
         }
     }

@@ -10,6 +10,7 @@ import androidx.fragment.app.DialogFragment;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.exceptions.ListaException;
+import sp.senai.br.mercapli.exceptions.MercadoException;
 
 public class ListaDeleteDialog extends DialogFragment {
 
@@ -28,9 +29,9 @@ public class ListaDeleteDialog extends DialogFragment {
         builder.setTitle(R.string.deletar_compra)
                 .setPositiveButton(R.string.sim, ((dialogInterface, i) -> {
                     try{
-                        lista.deletarLista(database);
+                        lista.deletar(database);
                         getActivity().onBackPressed();
-                    } catch (ListaException e){
+                    } catch (MercadoException e){
                         System.out.println(e.toString());
                     }
                 }))

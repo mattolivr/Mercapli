@@ -4,14 +4,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
-import sp.senai.br.mercapli.exceptions.CompraException;
+import sp.senai.br.mercapli.exceptions.MercadoException;
 
 public class CarrinhoDeleteDialog extends DialogFragment {
 
@@ -31,9 +29,9 @@ public class CarrinhoDeleteDialog extends DialogFragment {
         builder.setTitle(R.string.deletar_compra)
                 .setPositiveButton(R.string.sim, ((dialogInterface, i) -> {
                     try{
-                        if(!isNew) { compra.deletarCompra(database); }
+                        if(!isNew) { compra.deletar(database); }
                         getActivity().onBackPressed();
-                    } catch (CompraException e){
+                    } catch (MercadoException e){
                         System.out.println(e.toString());
                     }
                 }))
