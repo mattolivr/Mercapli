@@ -16,8 +16,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     final TextView nome;
     final TextView preco;
     final TextView qtde;
-    final TextView cat;
-    final TextView id;
     final TextView precoFinal;
 
     final TextView nomeE;
@@ -27,8 +25,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
     final Button btnPrdEdtAdicionar;
     final Button btnPrdEdtCancelar;
     final Button btnPrdEdtExcluir;
-    final ImageButton fotoProdutoEdit;
-    final ImageView fotoProdutoLayout;
 
 
     public ItemViewHolder(View view) {
@@ -37,8 +33,6 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         nome    = (TextView) view.findViewById(R.id.nome_produto_layout );
         preco   = (TextView) view.findViewById(R.id.preco_produto_layout);
         qtde    = (TextView) view.findViewById(R.id.qtde_produto_layout );
-        cat     = (TextView) view.findViewById(R.id.cat_produto_layout  );
-        id      = (TextView) view.findViewById(R.id.id_produto_layout   );
         precoFinal = (TextView) view.findViewById(R.id.precoFinal_produto_layout);
 
         nomeE    = (TextView) view.findViewById(R.id.nome_produto_edit );
@@ -49,9 +43,5 @@ public class ItemViewHolder extends RecyclerView.ViewHolder {
         btnPrdEdtAdicionar = (Button) view.findViewById(R.id.btnPrdEdtAdicionar);
         btnPrdEdtCancelar  = (Button) view.findViewById(R.id.btnPrdEdtCancelar );
         btnPrdEdtExcluir   = (Button) view.findViewById(R.id.btnPrdEdtExcluir  );
-
-        fotoProdutoEdit = (ImageButton) view.findViewById(R.id.foto_produto_edit);
-
-        fotoProdutoLayout = (ImageView) view.findViewById(R.id.foto_produto_layout);
     }
 }

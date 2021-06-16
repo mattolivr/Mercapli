@@ -21,18 +21,24 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DecimalFormat;
 
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
+import sp.senai.br.mercapli.dialogs.UsernameDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
+import static sp.senai.br.mercapli.GlobalVariables.USER_NAME;
 
 public class DashboardFragment extends Fragment {
 
-    private TextView tvGastoTotal;
+    private TextView tvGastoTotal, tvUsername;
     private DrawerLayout drawerLayoutDashboard;
     private ImageButton imageMenuDashboard;
     private ImageButton ibAtalhoCompra, ibAtalhoLista, ibAtalhoMeta, ibAtalhoConfig;
@@ -65,6 +71,7 @@ public class DashboardFragment extends Fragment {
         drawerLayoutDashboard   = view.findViewById(R.id.drawerLayoutDashboard);
         imageMenuDashboard      = view.findViewById(R.id.ibDashMenu);
         tvGastoTotal            = view.findViewById(R.id.tvDashValorTotal);
+        tvUsername              = view.findViewById(R.id.tvDashUserName);
         navigationViewDashboard = view.findViewById(R.id.navigationViewDashboard);
         ibAtalhoCompra          = view.findViewById(R.id.ibDashAtalhoAddCompra);
         ibAtalhoLista           = view.findViewById(R.id.ibDashAtalhoAddLista);
@@ -83,7 +90,12 @@ public class DashboardFragment extends Fragment {
         ibAtalhoLista .setOnClickListener(lista  -> callListaActivity());
         ibAtalhoMeta  .setOnClickListener(meta   -> callMetaDialog());
         ibAtalhoConfig.setOnClickListener(cnfg   -> callConfigActivity());
+        tvUsername    .setOnClickListener(alterarNome -> {
+            DialogFragment dfAlterarNome = new UsernameDialog();
+            dfAlterarNome.show(this.getParentFragmentManager(), "alterarNome");
+        });
 
+        tvUsername.setText("Olá, Usuário");
         atualizarProgressoMeta();
         return view;
     }
@@ -103,6 +115,8 @@ public class DashboardFragment extends Fragment {
         int valorRestante = META_GASTOS.getValorRestantePorcentagem();
         pbMeta.atualizar(valorRestante);
     }
+
+
 
     private void callCompraActivity(){
         Intent it = new Intent(this.getContext(), CarrinhoActivity.class);

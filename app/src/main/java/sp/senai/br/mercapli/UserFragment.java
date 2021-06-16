@@ -1,5 +1,6 @@
 package sp.senai.br.mercapli;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -16,12 +17,17 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import sp.senai.br.mercapli.adapters.HistoricoAdapter;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
+import sp.senai.br.mercapli.dialogs.UsernameDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
@@ -78,6 +84,11 @@ public class UserFragment extends Fragment {
             dfAlterarMeta.show(this.getParentFragmentManager(), "alterarMeta");
         });
 
+        tvUsername.setOnClickListener(alterarNome -> {
+            DialogFragment dfAlterarNome = new UsernameDialog();
+            dfAlterarNome.show(this.getParentFragmentManager(), "alterarNome");
+        });
+
         setComponentsValues();
         atualizarProgressoMeta();
         atualizarHistorico();
@@ -93,7 +104,7 @@ public class UserFragment extends Fragment {
     }
 
     private void setComponentsValues() {
-        tvUsername.setText("Olá, " + USER_NAME + "!");
+        tvUsername.setText("Olá, Usuário ");
 
         tvGastos.setText(DecimalFormat.getCurrencyInstance().format(GASTO_TOTAL));
         tvMeta.setText(String.valueOf(DecimalFormat.getCurrencyInstance().format(META_GASTOS.getValor())));

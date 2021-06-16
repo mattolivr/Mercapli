@@ -62,8 +62,6 @@ public class ItemAdapter extends RecyclerView.Adapter {
             case PROD_VIEW: // Alterações em modo de visualização
                 holder.nome.setText(produto.getNome());
                 holder.preco.setText(produto.getValor().toString());
-                holder.cat.setText(produto.getCategoria());
-                holder.id.setText("" +produto.getId());
                 holder.qtde.setText("x" + produto.getQuantidade());
                 holder.precoFinal.setText(NumberFormat.getCurrencyInstance().format(produto.getValor() * produto.getQuantidade()));
 
@@ -88,11 +86,6 @@ public class ItemAdapter extends RecyclerView.Adapter {
                 holder.qtdeE.setText((produto.getQuantidade() > 0)?"" + produto.getQuantidade():"");
 
                 // Ouvir ação dos Botões
-                holder.fotoProdutoEdit.setOnClickListener(view -> {
-                    DialogFragment dfadicionarfotoproduto = new FotoProdutoDialog();
-                    dfadicionarfotoproduto.show(fragmentManager, "adicionarFotoProduto");
-                });
-
                 holder.btnPrdEdtAdicionar.setOnClickListener(view -> {
                     produto.setTypeView(PROD_VIEW);
 
@@ -166,7 +159,6 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
         produto.setNome(holder.nomeE.getText().toString());
         produto.setValor(dValor);
-//                    produto.setCategoria(holder.catE.toString());
         produto.setQuantidade(iQtde);
     }
 

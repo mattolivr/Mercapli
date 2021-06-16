@@ -25,8 +25,6 @@ public class CriarBD extends SQLiteOpenHelper {
                 "item_nome VARCHAR(50) NOT NULL," +
                 "item_valor DOUBLE NOT NULL," +
                 "item_qtde INTEGER NOT NULL," +
-                "item_foto VARCHAR(100)," +
-                "item_cat VARCHAR(50) NOT NULL,"+
                 "FOREIGN KEY(compra_id_fk) REFERENCES compra(_id)," +
                 "FOREIGN KEY(lista_id_fk) REFERENCES lista(_id));");
 
@@ -44,10 +42,6 @@ public class CriarBD extends SQLiteOpenHelper {
                 "_local VARCHAR(50)," +
                 "_titulo VARCHAR(50));");
 
-        sqLiteDatabase.execSQL("CREATE TABLE imagem(" +
-                "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT," +
-                "img_id INTEGER NOT NULL);");
-
         sqLiteDatabase.execSQL("CREATE TABLE meta(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 "meta_valor DOUBLE NOT NULL," +
@@ -61,7 +55,6 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS item");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS compra");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS lista");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS imagem");
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS meta");
 
         onCreate(sqLiteDatabase);
