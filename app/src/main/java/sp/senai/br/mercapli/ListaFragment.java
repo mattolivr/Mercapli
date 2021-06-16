@@ -1,7 +1,6 @@
 package sp.senai.br.mercapli;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -19,12 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
 import sp.senai.br.mercapli.adapters.ListaAdapter;
-import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.database.CriarBD;
 
 public class ListaFragment extends Fragment {
@@ -59,7 +56,7 @@ public class ListaFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_lista, container, false);
 
-        rvListas = view.findViewById(R.id.rvListaListas);
+        rvListas = view.findViewById(R.id.rvListaItens);
 
         btAdd = view.findViewById(R.id.btnListaAdd);
         drawerLayoutLista = view.findViewById(R.id.drawerLayoutLista);
@@ -67,7 +64,7 @@ public class ListaFragment extends Fragment {
         navigationViewLista = view.findViewById(R.id.navigationViewLista);
         navControllerLista = Navigation.findNavController(getActivity(), R.id.fragment);
 
-        listaAdapter = new ListaAdapter(this.getContext());
+        listaAdapter = new ListaAdapter(this.getContext(), ListaAdapter.LISTA_DEFAULT);
         listaLayoutManager = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
 
         database = new CriarBD(view.getContext()).getReadableDatabase();
@@ -80,14 +77,14 @@ public class ListaFragment extends Fragment {
         btAdd.setOnClickListener(add -> adicionarLista());
         imageMenuLista.setOnClickListener(open -> drawerLayoutLista.openDrawer(GravityCompat.START));
 
-        listaAdapter.getListas(database);
+        listaAdapter.setListas(database);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        listaAdapter.getListas(database);
+        listaAdapter.setListas(database);
     }
 
     private void adicionarLista(){

@@ -16,6 +16,12 @@ public class CompraListaViewHolder extends RecyclerView.ViewHolder {
     final TextView data;
     final TextView titulo;
 
+    final ConstraintLayout clLayoutS;
+    final TextView tituloS;
+    final TextView valorS;
+    final TextView localS;
+    final TextView dataS;
+
     public CompraListaViewHolder(View view) {
         super(view);
         clLayout = (ConstraintLayout) view.findViewById(R.id.clCompras);
@@ -23,5 +29,11 @@ public class CompraListaViewHolder extends RecyclerView.ViewHolder {
         local  = (TextView) view.findViewById(R.id.tvCompraLocal );
         data   = (TextView) view.findViewById(R.id.tvCompraData  );
         titulo = (TextView) view.findViewById(R.id.tvCompraTitulo);
+
+        tituloS  = (TextView) itemView.findViewById(R.id.tvBaseItemTitulo);
+        valorS   = (TextView) itemView.findViewById(R.id.tvBaseItemValor);
+        localS   = (TextView) itemView.findViewById(R.id.tvBaseItemLocal);
+        dataS    = (TextView) itemView.findViewById(R.id.tvBaseItemData);
+        clLayoutS = (ConstraintLayout) itemView.findViewById(R.id.clBaseItemLayout);
     }
 }

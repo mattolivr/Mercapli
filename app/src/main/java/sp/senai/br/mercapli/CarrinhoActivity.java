@@ -18,6 +18,7 @@ import java.text.NumberFormat;
 import sp.senai.br.mercapli.adapters.ItemAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Item;
+import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.BackDialog;
@@ -47,6 +48,10 @@ public class CarrinhoActivity extends AppCompatActivity {
 
     private Compra newCompra;
     private long compraData;
+
+    private Lista newLista;
+    private long listaData;
+
     private SQLiteDatabase database;
 
     @Override
@@ -57,6 +62,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         isNew       = getIntent().getBooleanExtra("newParam", true);
         compraData  = getIntent().getLongExtra("compraData", 0);
+        listaData   = getIntent().getLongExtra("listaData", 0);
 
         tvValorTotal     = findViewById(R.id.tvCarrinhoValorTotal);
         etTitulo         = findViewById(R.id.etCarrinhoTitulo);
@@ -92,6 +98,23 @@ public class CarrinhoActivity extends AppCompatActivity {
             tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(0));
             etTitulo.setText("");
             etLocal.setText("");
+
+            if(listaData > 0){
+                newLista = new Lista(database, listaData);
+
+                etTitulo.setText(newLista.getTitulo());
+                etLocal .setText(newLista.getLocal());
+
+                for(Item item: newLista.getItens()){
+                    item.setTypeView(PROD_VIEW);
+                    adapter.addProduto(item);
+                }
+
+                atualizarValorTotal();
+                atualizarProgressoMeta();
+            } else {
+                newLista = new Lista();
+            }
         }else{
             // Vizualização reciclada
             if (compraData > 0){
@@ -152,7 +175,7 @@ public class CarrinhoActivity extends AppCompatActivity {
 
         if(isNew){
             // Finalizar compra nova
-            DialogFragment dffinalizarCompra = new CarrinhoSaveDialog(newCompra, database);
+            DialogFragment dffinalizarCompra = new CarrinhoSaveDialog(newCompra, newLista, database);
             dffinalizarCompra.show(getSupportFragmentManager(), "carrinho");
         } else {
             // Finalizar alterações

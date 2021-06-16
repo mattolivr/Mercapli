@@ -10,15 +10,18 @@ import androidx.fragment.app.DialogFragment;
 
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
+import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.exceptions.MercadoException;
 
 public class CarrinhoSaveDialog extends DialogFragment {
 
     private Compra compra;
+    private Lista lista;
     private SQLiteDatabase database;
 
-    public CarrinhoSaveDialog(Compra compra, SQLiteDatabase database) {
+    public CarrinhoSaveDialog(Compra compra, Lista lista, SQLiteDatabase database) {
         this.compra = compra;
+        this.lista  = lista;
         this.database = database;
     }
 
@@ -29,6 +32,7 @@ public class CarrinhoSaveDialog extends DialogFragment {
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
                     try {
                         compra.finalizar(database);
+                        lista.deletar(database);
                         getActivity().onBackPressed();
                     }
                     catch (MercadoException e){

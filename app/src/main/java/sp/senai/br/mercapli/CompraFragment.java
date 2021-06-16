@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +29,7 @@ import java.text.NumberFormat;
 import sp.senai.br.mercapli.adapters.CompraAdapter;
 import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.dialogs.CompraBaseDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 
@@ -101,17 +103,30 @@ public class CompraFragment extends Fragment {
         return view;
     }
 
-    public void adicionarCompra() {
+    private void adicionarCompra() {
         callCarrinhoActivity();
     }
 
-    public void atualizarGastos() {
+    private void atualizarGastos() {
         tvValorTotal.setText(NumberFormat.getCurrencyInstance().format(GASTO_TOTAL));
     }
 
-    public void callCarrinhoActivity() {
-        Intent it = new Intent(super.getContext(), CarrinhoActivity.class);
-        it.putExtra("newParam", true);
-        startActivity(it);
+    private void callCarrinhoActivity() {
+        if(this.getListasCount(database) > 0){
+            DialogFragment dfCompraBase = new CompraBaseDialog();
+            dfCompraBase.show(getParentFragmentManager(), "baseCompra");
+        } else {
+            Intent it = new Intent(super.getContext(), CarrinhoActivity.class);
+            it.putExtra("newParam", true);
+            startActivity(it);
+        }
+    }
+
+    private int getListasCount(SQLiteDatabase database){
+        Cursor cursorListas;
+
+        cursorListas = database.query("lista", null, null, null, null, null, null);
+
+        return cursorListas.getCount();
     }
 }
