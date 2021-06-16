@@ -24,7 +24,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@color/white">
+                android:background="@drawable/shape" >
 
                 <ImageView
                     android:id="@+id/ivUserPicture"
@@ -58,7 +58,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@color/white"
+                android:background="@drawable/shape"
                 android:orientation="vertical"
                 android:padding="16dp">
 
@@ -156,7 +156,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginRight="16dp"
-                android:background="@color/white"
+                android:background="@drawable/shape"
                 android:orientation="vertical"
                 android:padding="16dp">
 
