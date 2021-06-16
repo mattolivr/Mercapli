@@ -45,13 +45,6 @@ public class UserFragment extends Fragment {
 
     public UserFragment() {}
 
-    public static UserFragment newInstance(String param1, String param2) {
-        UserFragment fragment = new UserFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +62,7 @@ public class UserFragment extends Fragment {
         tvStatus        = view.findViewById(R.id.tvUserMetaStatus);
         btnAlterarMeta  = view.findViewById(R.id.btnUserMeta);
         rvHistorico     = view.findViewById(R.id.rvUserHistorico);
+        llHistorico     = view.findViewById(R.id.llUserHistorico);
 
         database    = new CriarBD(this.getContext()).getWritableDatabase();
         pbMeta      = new ProgressBarMeta(view, R.id.pbUserMeta);
@@ -86,6 +80,7 @@ public class UserFragment extends Fragment {
 
         setComponentsValues();
         atualizarProgressoMeta();
+        atualizarHistorico();
         return view;
     }
 
@@ -94,6 +89,7 @@ public class UserFragment extends Fragment {
         super.onResume();
         setComponentsValues();
         atualizarProgressoMeta();
+        atualizarHistorico();
     }
 
     private void setComponentsValues() {
@@ -110,6 +106,8 @@ public class UserFragment extends Fragment {
     }
 
     private void atualizarHistorico(){
-
+        if(historicoAdapter.getItemCount() == 0){
+            llHistorico.setVisibility(View.INVISIBLE);
+        }
     }
 }

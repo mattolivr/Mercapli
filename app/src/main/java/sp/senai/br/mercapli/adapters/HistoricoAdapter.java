@@ -43,11 +43,11 @@ public class HistoricoAdapter extends RecyclerView.Adapter {
         Double valorRestante = meta.getValor() - meta.getGastoTotal();
 
         holder.meta.setText(
-                DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(meta.getDataCriacao()) + " -\n" +
-                        DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(meta.getDataExclusao())
+                DateFormat.getDateInstance(DateFormat.MEDIUM).format(meta.getDataCriacao()) + " - " +
+                        DateFormat.getDateInstance(DateFormat.MEDIUM).format(meta.getDataExclusao())
         );
         holder.valor.setText(
-                ((valorRestante >= 0)?"+":"-") +
+                ((valorRestante >= 0)?"+":"") +
                         NumberFormat.getCurrencyInstance().format(valorRestante)
         );
         holder.valor.setTextColor(
@@ -71,7 +71,7 @@ public class HistoricoAdapter extends RecyclerView.Adapter {
     private void getMetas(SQLiteDatabase database){
         final Cursor cursorMetas;
 
-        cursorMetas = database.query("meta", null, null, null, null, null, null);
+        cursorMetas = database.query("meta", null, "meta_excl > 0 AND meta_valor > 0", null, null, null, null);
 
         if(cursorMetas.getCount() > 0){
             resetMetas();
