@@ -53,6 +53,8 @@ public class ListaAdapter extends RecyclerView.Adapter {
 
         holder.clLayout.setOnClickListener(view -> {
             Intent it = new Intent(context, ListaActivity.class);
+            it.putExtra("newParam", false);
+            it.putExtra("listaData", lista.getData());
             context.startActivity(it);
         });
     }

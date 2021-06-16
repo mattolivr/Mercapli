@@ -20,7 +20,7 @@ import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
-import sp.senai.br.mercapli.dialogs.CarrinhoBackDialog;
+import sp.senai.br.mercapli.dialogs.BackDialog;
 import sp.senai.br.mercapli.dialogs.CarrinhoDeleteDialog;
 import sp.senai.br.mercapli.dialogs.CarrinhoSaveDialog;
 import sp.senai.br.mercapli.exceptions.MetaException;
@@ -55,8 +55,8 @@ public class CarrinhoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_carrinho);
         getSupportActionBar().hide();
 
-        isNew = getIntent().getBooleanExtra("newParam", true);
-        compraData = getIntent().getLongExtra("compraData", 0);
+        isNew       = getIntent().getBooleanExtra("newParam", true);
+        compraData  = getIntent().getLongExtra("compraData", 0);
 
         tvValorTotal     = findViewById(R.id.tvCarrinhoValorTotal);
         etTitulo         = findViewById(R.id.etCarrinhoTitulo);
@@ -67,10 +67,10 @@ public class CarrinhoActivity extends AppCompatActivity {
         btFinalizar      = findViewById(R.id.btnCarrinhoFinalizar);
         btAdicionar      = findViewById(R.id.btnCarrinhoAdicionar);
 
-        pbMeta = new ProgressBarMeta(findViewById(R.id.pbCarrinhoMeta));
-        database = new CriarBD(getApplicationContext()).getWritableDatabase();
-        adapter  = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_CARRINHO);
-        layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
+        pbMeta          = new ProgressBarMeta(findViewById(R.id.pbCarrinhoMeta));
+        database        = new CriarBD(getApplicationContext()).getWritableDatabase();
+        adapter         = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_CARRINHO);
+        layoutManager   = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
         recyclerListener = holder -> {
             if(tvValorTotal != null){
@@ -98,7 +98,7 @@ public class CarrinhoActivity extends AppCompatActivity {
                 newCompra = new Compra(database, compraData);
 
                 etTitulo.setText(newCompra.getTitulo());
-                etLocal.setText(newCompra.getLocal());
+                etLocal .setText(newCompra.getLocal());
 
                 btFinalizar.setText("FINALIZAR ALTERAÇÕES");
 
@@ -166,7 +166,7 @@ public class CarrinhoActivity extends AppCompatActivity {
         if(isNew){
             super.onBackPressed();
         } else {
-            DialogFragment dfcancelarCompra = new CarrinhoBackDialog();
+            DialogFragment dfcancelarCompra = new BackDialog();
             dfcancelarCompra.show(getSupportFragmentManager(), "carrinhoVoltar");
         }
     }

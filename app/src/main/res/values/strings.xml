@@ -1,14 +1,16 @@
 <resources>
     <string name="app_name">Mercapli</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- DIALOG ALERTS -->
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
 
-    <!-- DIALOG ALERTS -->
+    <string name="voltar_dialog">Parar de editar?</string>
+    <string name="voltar_dialog_desc">Suas alterações não serão salvas</string>
+
     <!-- Carrinho -->
     <string name="finalizar_compra">Deseja finalizar a compra?</string>
-    <string name="voltar_compra">Parar de editar?</string>
-    <string name="voltar_compra_desc">Suas alterações não serão salvas</string>
     <string name="deletar_compra">Deseja apagar essa compra?</string>
 
     <!-- Lista -->

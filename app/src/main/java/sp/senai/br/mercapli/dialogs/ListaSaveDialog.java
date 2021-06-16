@@ -14,12 +14,12 @@ import sp.senai.br.mercapli.classes.Compra;
 import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.exceptions.MercadoException;
 
-public class ListaDialog extends DialogFragment {
+public class ListaSaveDialog extends DialogFragment {
 
     private Lista lista;
     private SQLiteDatabase database;
 
-    public ListaDialog (Lista lista, SQLiteDatabase database) {
+    public ListaSaveDialog(Lista lista, SQLiteDatabase database) {
         this.lista = lista;
         this.database = database;
     }

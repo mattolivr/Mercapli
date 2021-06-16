@@ -1,18 +1,15 @@
 package sp.senai.br.mercapli;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.res.ColorStateList;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,14 +18,18 @@ import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.classes.Lista;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.dialogs.BackDialog;
 import sp.senai.br.mercapli.dialogs.ListaDeleteDialog;
-import sp.senai.br.mercapli.dialogs.ListaDialog;
+import sp.senai.br.mercapli.dialogs.ListaSaveDialog;
 
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_LISTA;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 import static sp.senai.br.mercapli.GlobalVariables.PROD_EDIT;
+import static sp.senai.br.mercapli.GlobalVariables.PROD_VIEW;
 
 public class ListaActivity extends AppCompatActivity {
+
+    private Boolean isNew;
 
     private TextView tvTitulo;
     private EditText etTitulo, etLocal;
@@ -41,15 +42,18 @@ public class ListaActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager layoutManager;
     private RecyclerView.RecyclerListener recyclerListener;
 
-    private SQLiteDatabase database;
-
     private Lista newLista;
+    private long listaData;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista);
         getSupportActionBar().hide();
+
+        isNew = getIntent().getBooleanExtra("newParam", true);
+        listaData = getIntent().getLongExtra("listaData", 0);
 
         tvTitulo     = findViewById(R.id.tvListaViewTitulo);
         etTitulo     = findViewById(R.id.etListaViewTitulo);
@@ -64,10 +68,10 @@ public class ListaActivity extends AppCompatActivity {
         database       = new CriarBD(getApplicationContext()).getWritableDatabase();
         adapter        = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
         layoutManager  = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        newLista       = new Lista();
 
         recyclerListener = holder -> {
             atualizarProgressoMeta();
+
         };
 
         rvItens.setAdapter(adapter);
@@ -79,6 +83,29 @@ public class ListaActivity extends AppCompatActivity {
         btnFinalizar.setOnClickListener(finalizar -> finalizarLista());
         ibBack      .setOnClickListener(voltar    -> super.onBackPressed());
 
+        if(isNew){
+            newLista = new Lista();
+
+            etTitulo.setText("");
+            etLocal.setText("");
+        } else {
+            if(listaData > 0){
+                newLista = new Lista(database, listaData);
+
+                etTitulo.setText(newLista.getTitulo());
+                etLocal .setText(newLista.getTitulo());
+
+                btnFinalizar.setText("FINALIZAR ALTERAÇÕES");
+
+                for(Item item: newLista.getItens()) {
+                    item.setTypeView(PROD_VIEW);
+                    adapter.addProduto(item);
+                }
+            } else {
+                super.onBackPressed();
+                Toast.makeText(super.getApplicationContext(), "Algo deu Errado!", Toast.LENGTH_SHORT).show();
+            }
+        }
         atualizarProgressoMeta();
     }
 
@@ -101,8 +128,23 @@ public class ListaActivity extends AppCompatActivity {
         newLista.setTitulo(etTitulo.getText().toString());
         newLista.setLocal(etLocal.getText().toString());
 
-        DialogFragment dialogFragment = new ListaDialog(newLista, database);
-        dialogFragment.show(getSupportFragmentManager(), "lista");
+        if(isNew){
+            DialogFragment dialogFragment = new ListaSaveDialog(newLista, database);
+            dialogFragment.show(getSupportFragmentManager(), "lista");
+        } else {
+            newLista.atualizar(database);
+            super.onBackPressed();
+        }
+    }
+
+    private void cancelarLista(){
+        adapter.resetGastoLocal();
+        if(isNew){
+            super.onBackPressed();
+        } else {
+            DialogFragment dfcancelarLista = new BackDialog();
+            dfcancelarLista.show(getSupportFragmentManager(), "carrinhoVoltar");
+        }
     }
 
     private void deletarLista(){

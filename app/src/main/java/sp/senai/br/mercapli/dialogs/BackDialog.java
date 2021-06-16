@@ -11,14 +11,14 @@ import androidx.fragment.app.DialogFragment;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
 
-public class CarrinhoBackDialog extends DialogFragment {
+public class BackDialog extends DialogFragment {
 
-    public CarrinhoBackDialog() {}
+    public BackDialog() {}
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.voltar_compra).setMessage(R.string.voltar_compra_desc)
+        builder.setTitle(R.string.voltar_dialog_desc).setMessage(R.string.voltar_dialog_desc)
                 .setPositiveButton(R.string.sim, (dialogInterface, i) -> {
                     getActivity().onBackPressed();
                 })
