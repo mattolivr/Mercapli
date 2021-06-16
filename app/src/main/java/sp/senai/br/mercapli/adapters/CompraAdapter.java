@@ -2,6 +2,8 @@ package sp.senai.br.mercapli.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,15 +42,11 @@ public class CompraAdapter extends RecyclerView.Adapter {
         CompraListaViewHolder holder = (CompraListaViewHolder) viewHolder;
         Compra compra = compras.get(position);
 
-        // TODO: utilizar ID ao invés de Data
-//        holder.id    .setText(compra.getId());
         holder.titulo.setText(compra.getTitulo());
         holder.data  .setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(compra.getData()));
         holder.local .setText(compra.getLocal());
         holder.valor .setText(NumberFormat.getInstance().format(compra.getValorTotal()));
 
-        // Campos vazios não ocuparem espaço
-        // TODO: campos somem ao sair de vizualização
         if(holder.titulo.getText().equals("")) holder.titulo.setHeight(1);
         if(holder.local.getText() .equals("")) holder.local .setHeight(1);
 
@@ -77,5 +75,29 @@ public class CompraAdapter extends RecyclerView.Adapter {
         } else {
             return null;
         }
+    }
+
+    public void getCompras(SQLiteDatabase database) {
+
+        final Cursor cursor;
+
+        cursor = database.query("compra", null,null, null,null,null,null);
+
+        if(cursor.getCount() > 0){
+            cursor.moveToFirst();
+            this.resetCompra();
+
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                Compra newCompra = new Compra();
+
+                newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("_titulo")));
+                newCompra.setLocal (cursor.getString(cursor.getColumnIndexOrThrow("_local" )));
+                newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("_valTot")));
+                newCompra.setData(cursor.getLong(cursor.getColumnIndexOrThrow("_data")));
+
+                this.addCompra(newCompra);
+            }
+        }
+        this.notifyDataSetChanged();
     }
 }

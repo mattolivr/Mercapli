@@ -80,14 +80,14 @@ public class ListaFragment extends Fragment {
         btAdd.setOnClickListener(add -> adicionarLista());
         imageMenuLista.setOnClickListener(open -> drawerLayoutLista.openDrawer(GravityCompat.START));
 
-        getListas();
+        listaAdapter.getListas(database);
         return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getListas();
+        listaAdapter.getListas(database);
     }
 
     private void adicionarLista(){
@@ -95,29 +95,4 @@ public class ListaFragment extends Fragment {
         startActivity(it);
     }
 
-    private void getListas(){
-        final Cursor cursor;
-
-        cursor = database.query("lista",
-                new String[]{"_id", "lista_valTot", "lista_data", "lista_local", "lista_titulo"},
-                null, null, null, null, null);
-
-        if (cursor.getCount() > 0){
-            cursor.moveToFirst();
-            listaAdapter.resetListas();
-
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                Lista newLista = new Lista();
-
-                newLista.setId(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
-                newLista.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("lista_valTot")));
-                newLista.setData(cursor.getLong(cursor.getColumnIndexOrThrow("lista_data")));
-                newLista.setLocal(cursor.getString(cursor.getColumnIndexOrThrow("lista_local")));
-                newLista.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("lista_titulo")));
-
-                listaAdapter.addLista(newLista);
-            }
-        }
-        listaAdapter.notifyDataSetChanged();
-    }
 }

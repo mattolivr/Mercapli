@@ -63,9 +63,9 @@ public class CompraFragment extends Fragment {
 
     @Override
     public void onResume() {
-        getCompras();
-        atualizarGastos();
         super.onResume();
+        compraAdapter.getCompras(database);
+        atualizarGastos();
         // TODO: scroll para o topo
     }
 
@@ -93,40 +93,16 @@ public class CompraFragment extends Fragment {
 
         NavigationUI.setupWithNavController(navigationViewCompra, navControllerCompra);
 
-        btnAdicionarCompra.setOnClickListener(view1 -> adicionarCompra());
-        imageMenuCompra.setOnClickListener(view12 -> drawerLayoutCompra.openDrawer(GravityCompat.START));
+        btnAdicionarCompra.setOnClickListener(add -> adicionarCompra());
+        imageMenuCompra.setOnClickListener(menu -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
-        getCompras();
+        compraAdapter.getCompras(database);
         atualizarGastos();
         return view;
     }
 
     public void adicionarCompra() {
         callCarrinhoActivity();
-    }
-
-    public void getCompras() {
-
-        final Cursor cursor;
-
-        cursor = database.query("compra", null,null, null,null,null,null);
-
-        if(cursor.getCount() > 0){
-            cursor.moveToFirst();
-            compraAdapter.resetCompra();
-
-            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
-                Compra newCompra = new Compra();
-
-                newCompra.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("_titulo")));
-                newCompra.setLocal (cursor.getString(cursor.getColumnIndexOrThrow("_local" )));
-                newCompra.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("_valTot")));
-                newCompra.setData(cursor.getLong(cursor.getColumnIndexOrThrow("_data")));
-
-                compraAdapter.addCompra(newCompra);
-            }
-        }
-        compraAdapter.notifyDataSetChanged();
     }
 
     public void atualizarGastos() {

@@ -2,6 +2,8 @@ package sp.senai.br.mercapli.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,4 +65,28 @@ public class ListaAdapter extends RecyclerView.Adapter {
     public void addLista(Lista lista){this.listas.add(lista);}
 
     public void resetListas(){this.listas.clear();}
+
+    public void getListas(SQLiteDatabase database){
+        final Cursor cursor;
+
+        cursor = database.query("lista",null,null, null, null, null, null);
+
+        if (cursor.getCount() > 0){
+            cursor.moveToFirst();
+            this.resetListas();
+
+            for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+                Lista newLista = new Lista();
+
+                newLista.setId(cursor.getInt(cursor.getColumnIndexOrThrow("_id")));
+                newLista.setValorTotal(cursor.getDouble(cursor.getColumnIndexOrThrow("_valTot")));
+                newLista.setData(cursor.getLong(cursor.getColumnIndexOrThrow("_data")));
+                newLista.setLocal(cursor.getString(cursor.getColumnIndexOrThrow("_local")));
+                newLista.setTitulo(cursor.getString(cursor.getColumnIndexOrThrow("_titulo")));
+
+                this.addLista(newLista);
+            }
+        }
+        this.notifyDataSetChanged();
+    }
 }
