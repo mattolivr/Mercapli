@@ -66,7 +66,7 @@ public class CompraFragment extends Fragment {
         super.onResume();
         compraAdapter.getCompras(database);
         atualizarGastos();
-        // TODO: scroll para o topo
+        // TODO: atualizar
     }
 
     @Override

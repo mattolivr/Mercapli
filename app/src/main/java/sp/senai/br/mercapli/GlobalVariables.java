@@ -5,7 +5,7 @@ import sp.senai.br.mercapli.classes.Meta;
 public class GlobalVariables {
 
     // Usuário
-    public static String USER_NAME = "Usuário";
+    public static final String USER_NAME = "Usuário";
 
     // Meta
     public static Meta META_GASTOS;

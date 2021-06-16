@@ -5,16 +5,20 @@ import android.os.Bundle;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.text.DecimalFormat;
 
+import sp.senai.br.mercapli.adapters.HistoricoAdapter;
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
@@ -31,6 +35,11 @@ public class UserFragment extends Fragment {
     private ProgressBarMeta pbMeta;
     private TextView tvStatus;
     private Button btnAlterarMeta;
+    private LinearLayout llHistorico;
+
+    private HistoricoAdapter historicoAdapter;
+    private LinearLayoutManager historicoLayout;
+    private RecyclerView rvHistorico;
 
     private SQLiteDatabase database;
 
@@ -55,13 +64,20 @@ public class UserFragment extends Fragment {
 
         tvUsername = view.findViewById(R.id.tvUserUsername);
 
-        tvGastos = view.findViewById(R.id.tvUserMetaValorGasto);
-        tvMeta = view.findViewById(R.id.tvUserMetaValorTotal);
-        tvStatus = view.findViewById(R.id.tvUserMetaStatus);
-        btnAlterarMeta = view.findViewById(R.id.btnUserMeta);
+        tvGastos        = view.findViewById(R.id.tvUserMetaValorGasto);
+        tvMeta          = view.findViewById(R.id.tvUserMetaValorTotal);
+        tvStatus        = view.findViewById(R.id.tvUserMetaStatus);
+        btnAlterarMeta  = view.findViewById(R.id.btnUserMeta);
+        rvHistorico     = view.findViewById(R.id.rvUserHistorico);
 
-        database = new CriarBD(this.getContext()).getWritableDatabase();
-        pbMeta = new ProgressBarMeta(view, R.id.pbUserMeta);
+        database    = new CriarBD(this.getContext()).getWritableDatabase();
+        pbMeta      = new ProgressBarMeta(view, R.id.pbUserMeta);
+
+        historicoAdapter    = new HistoricoAdapter(database);
+        historicoLayout     = new LinearLayoutManager(view.getContext(), LinearLayoutManager.VERTICAL, true);
+
+        rvHistorico.setAdapter(historicoAdapter);
+        rvHistorico.setLayoutManager(historicoLayout);
 
         btnAlterarMeta.setOnClickListener(alterarMeta -> {
             DialogFragment dfAlterarMeta = new MetaDialog(database);
@@ -91,5 +107,9 @@ public class UserFragment extends Fragment {
     private void atualizarProgressoMeta(){
         int valorRestante = META_GASTOS.getValorRestantePorcentagem();
         pbMeta.atualizar(valorRestante);
+    }
+
+    private void atualizarHistorico(){
+
     }
 }

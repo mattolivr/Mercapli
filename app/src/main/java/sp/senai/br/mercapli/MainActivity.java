@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         refreshDatabaseValues();
+        getDatabaseValues();
         super.onResume();
     }
 

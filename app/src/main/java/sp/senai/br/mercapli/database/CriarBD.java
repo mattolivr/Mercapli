@@ -51,6 +51,7 @@ public class CriarBD extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL("CREATE TABLE meta(" +
                 "_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
                 "meta_valor DOUBLE NOT NULL," +
+                "meta_gasto DOUBLE NOT NULL," +
                 "meta_cria LONG NOT NULL," +
                 "meta_excl LONG NOT NULL)");
     }

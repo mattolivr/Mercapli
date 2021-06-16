@@ -150,6 +150,9 @@ public abstract class Mercado {
         if(this.getItens().size() == 0){
             throw new MercadoException("Não é possível finalizar uma compra sem produtos");
         }
+        if(this.getValorTotal() == 0.0){
+            throw new MercadoException("Não é possível finalizar uma compra com valor igual a 0");
+        }
 
         insertMercado.put("_local",  this.getLocal()     );
         insertMercado.put("_titulo", this.getTitulo()    );

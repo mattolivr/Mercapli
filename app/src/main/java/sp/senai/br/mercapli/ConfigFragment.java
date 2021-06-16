@@ -13,44 +13,16 @@ import android.widget.ToggleButton;
 
 import sp.senai.br.mercapli.database.CriarBD;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ConfigFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ConfigFragment extends Fragment {
 
-    private ToggleButton tbDeletaBanco;
+    private Button btDeletarBanco;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public ConfigFragment() {
-        // Required empty public constructor
-    }
-
-    public static ConfigFragment newInstance(String param1, String param2) {
-        ConfigFragment fragment = new ConfigFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public ConfigFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -58,19 +30,11 @@ public class ConfigFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_config, container, false);
 
-        tbDeletaBanco = view.findViewById(R.id.tbDeletaBanco);
+        CriarBD criarBD = new CriarBD(getContext());
 
-        tbDeletaBanco.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if (b) {
-                    CriarBD criarBD = new CriarBD(getContext());
-                    criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1);
-                } else {
+        btDeletarBanco = view.findViewById(R.id.btnConfigDeleteDatabase);
 
-                }
-            }
-        });
+        btDeletarBanco.setOnClickListener(deletarBanco -> criarBD.onUpgrade(criarBD.getWritableDatabase(), 1,1));
 
         return view;
     }
