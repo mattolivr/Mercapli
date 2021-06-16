@@ -14,6 +14,7 @@
     <string name="deletar_compra">Deseja apagar essa compra?</string>
 
     <!-- Lista -->
-    <string name="finalizar_lista">Deseja Finalizar a Lista?</string>
+    <string name="finalizar_lista">Deseja finalizar a lista?</string>
+    <string name="deletar_lista">Deseja apagar essa lista?</string>
 
 </resources>

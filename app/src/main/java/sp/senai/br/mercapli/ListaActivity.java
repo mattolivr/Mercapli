@@ -81,7 +81,7 @@ public class ListaActivity extends AppCompatActivity {
         btnAddBot   .setOnClickListener(adicionar -> adicionarItem());
         ibDelete    .setOnClickListener(deletar   -> deletarLista());
         btnFinalizar.setOnClickListener(finalizar -> finalizarLista());
-        ibBack      .setOnClickListener(voltar    -> super.onBackPressed());
+        ibBack      .setOnClickListener(voltar    -> cancelarLista());
 
         if(isNew){
             newLista = new Lista();

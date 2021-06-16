@@ -26,7 +26,7 @@ public class ListaDeleteDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.deletar_compra)
+        builder.setTitle(R.string.deletar_lista)
                 .setPositiveButton(R.string.sim, ((dialogInterface, i) -> {
                     try{
                         lista.deletar(database);
