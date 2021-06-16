@@ -79,7 +79,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Título"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="20" />
 
         <EditText
             android:id="@+id/etListaViewLocal"
@@ -88,7 +89,8 @@
             android:layout_weight="1"
             android:ems="10"
             android:hint="Local da Compra"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:maxLength="20" />
     </LinearLayout>
 
     <ScrollView

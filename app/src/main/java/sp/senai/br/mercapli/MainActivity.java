@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        refreshDatabaseValues();
         getDatabaseValues();
         super.onResume();
     }
@@ -63,22 +62,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // Gasto Total
-        if(GASTO_TOTAL == 0.0){
-            cursorGastos = database.query("compra", null, null, null, null, null, null);
-
-            for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
-                valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("_valTot"));
-            }
-
-            GASTO_TOTAL = valorTotal;
-        }
-    }
-
-    private void refreshDatabaseValues(){
-        Cursor cursorGastos;
-        Double valorTotal = 0.0;
-
-        cursorGastos = database.query("compra", null, null, null, null, null, null);
+        cursorGastos = database.query("compra", null, "_data > " + META_GASTOS.getDataCriacao(), null, null, null, null);
 
         for (cursorGastos.moveToFirst(); !cursorGastos.isAfterLast(); cursorGastos.moveToNext()){
             valorTotal += cursorGastos.getDouble(cursorGastos.getColumnIndexOrThrow("_valTot"));

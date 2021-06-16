@@ -19,6 +19,8 @@ import sp.senai.br.mercapli.CarrinhoActivity;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Compra;
 
+import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
+
 public class CompraAdapter extends RecyclerView.Adapter {
 
     private List<Compra> compras = new ArrayList<>();
@@ -43,7 +45,8 @@ public class CompraAdapter extends RecyclerView.Adapter {
         Compra compra = compras.get(position);
 
         holder.titulo.setText(compra.getTitulo());
-        holder.data  .setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(compra.getData()));
+        holder.data  .setText(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.DATE_FIELD).format(compra.getData()) +
+                ((compra.getData() < META_GASTOS.getDataCriacao())?" - Finalizada":""));
         holder.local .setText(compra.getLocal());
         holder.valor .setText(NumberFormat.getInstance().format(compra.getValorTotal()));
 
