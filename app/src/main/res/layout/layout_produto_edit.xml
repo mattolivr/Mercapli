@@ -24,7 +24,7 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="Nome do Produto"
-        android:inputType="textPersonName"
+        android:inputType="text"
         android:maxLength="25"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:ems="5"
             android:hint="Preço"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:maxLength="6"
             android:numeric="decimal" />
 
@@ -58,7 +58,7 @@
             android:layout_marginLeft="8dp"
             android:ems="5"
             android:hint="Quantidade"
-            android:inputType="textPersonName"
+            android:inputType="number"
             android:maxLength="3"
             android:numeric="integer" />
     </LinearLayout>

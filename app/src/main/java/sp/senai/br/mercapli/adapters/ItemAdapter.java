@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
@@ -16,6 +17,7 @@ import java.util.List;
 import sp.senai.br.mercapli.R;
 import sp.senai.br.mercapli.classes.Item;
 import sp.senai.br.mercapli.dialogs.FotoProdutoDialog;
+import sp.senai.br.mercapli.exceptions.ItemException;
 
 import static sp.senai.br.mercapli.GlobalVariables.GASTO_LOCAL;
 import static sp.senai.br.mercapli.GlobalVariables.ITEM_CARRINHO;
@@ -73,9 +75,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
                         this.notifyItemChanged(position);
                         this.setEditing(true);
                     }
-                });
-
-                break;
+                }); break;
             case PROD_EDIT: // Modo de Edição
                 setEditing(true); // Permitir somente 1 edição por vez
 
@@ -87,6 +87,8 @@ public class ItemAdapter extends RecyclerView.Adapter {
 
                 // Ouvir ação dos Botões
                 holder.btnPrdEdtAdicionar.setOnClickListener(view -> {
+                    // TODO: Verificar campos
+
                     produto.setTypeView(PROD_VIEW);
 
                     insertDataOnItem(holder, produto);
@@ -113,8 +115,7 @@ public class ItemAdapter extends RecyclerView.Adapter {
                     if(listType == ITEM_CARRINHO){
                         GASTO_LOCAL = getProdutosSum();
                     }
-                });
-                break;
+                }); break;
         }
     }
 

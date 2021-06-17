@@ -109,7 +109,7 @@ public class Meta {
         insertMeta.put("meta_valor", this.getValor());
         insertMeta.put("meta_cria", this.getDataCriacao());
         insertMeta.put("meta_excl", this.getDataExclusao());
-        insertMeta.put("meta_gasto", GASTO_TOTAL);
+        insertMeta.put("meta_gasto", this.getGastoTotal());
 
         metasIguais = database.query("meta", null, "meta_cria = " + this.getDataCriacao(), null, null, null, null);
 

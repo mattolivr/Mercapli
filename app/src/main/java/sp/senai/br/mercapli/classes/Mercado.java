@@ -73,7 +73,7 @@ public abstract class Mercado {
         this.id = id;
     }
 
-    public void setId(SQLiteDatabase database, long timestamp) {
+    public void setId(SQLiteDatabase database, long timestamp)  {
         final Cursor cursor;
 
         cursor = database.query(getTable(), null, "_data = " + timestamp, null, null, null, null);

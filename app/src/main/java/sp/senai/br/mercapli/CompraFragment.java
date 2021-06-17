@@ -99,6 +99,7 @@ public class CompraFragment extends Fragment {
         imageMenuCompra.setOnClickListener(menu -> drawerLayoutCompra.openDrawer(GravityCompat.START));
 
         compraAdapter.getCompras(database);
+
         atualizarGastos();
         return view;
     }

@@ -40,13 +40,6 @@ public class ListaFragment extends Fragment {
 
     public ListaFragment() {}
 
-    public static ListaFragment newInstance() {
-        ListaFragment fragment = new ListaFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +71,7 @@ public class ListaFragment extends Fragment {
         imageMenuLista.setOnClickListener(open -> drawerLayoutLista.openDrawer(GravityCompat.START));
 
         listaAdapter.setListas(database);
+
         return view;
     }
 

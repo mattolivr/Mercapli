@@ -1,6 +1,7 @@
 package sp.senai.br.mercapli;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 
@@ -29,6 +30,7 @@ import java.text.DecimalFormat;
 
 import sp.senai.br.mercapli.components.ProgressBarMeta;
 import sp.senai.br.mercapli.database.CriarBD;
+import sp.senai.br.mercapli.dialogs.CompraBaseDialog;
 import sp.senai.br.mercapli.dialogs.MetaDialog;
 import sp.senai.br.mercapli.dialogs.UsernameDialog;
 
@@ -49,13 +51,6 @@ public class DashboardFragment extends Fragment {
     private SQLiteDatabase database;
 
     public DashboardFragment() {}
-
-    public static DashboardFragment newInstance() {
-        DashboardFragment fragment = new DashboardFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -80,8 +75,8 @@ public class DashboardFragment extends Fragment {
 
         navControllerDashboard = Navigation.findNavController(getActivity(), R.id.fragment);
 
-        database = new CriarBD(view.getContext()).getReadableDatabase();
-        pbMeta = new ProgressBarMeta(view, R.id.pbDashMeta);
+        database    = new CriarBD(view.getContext()).getReadableDatabase();
+        pbMeta      = new ProgressBarMeta(view, R.id.pbDashMeta);
 
         NavigationUI.setupWithNavController(navigationViewDashboard, navControllerDashboard);
 
@@ -116,11 +111,15 @@ public class DashboardFragment extends Fragment {
         pbMeta.atualizar(valorRestante);
     }
 
-
-
     private void callCompraActivity(){
-        Intent it = new Intent(this.getContext(), CarrinhoActivity.class);
-        startActivity(it);
+        if(this.getListasCount(database) > 0){
+            DialogFragment dfCompraBase = new CompraBaseDialog();
+            dfCompraBase.show(getParentFragmentManager(), "baseCompra");
+        } else {
+            Intent it = new Intent(super.getContext(), CarrinhoActivity.class);
+            it.putExtra("newParam", true);
+            startActivity(it);
+        }
     }
 
     private void callListaActivity(){
@@ -136,5 +135,13 @@ public class DashboardFragment extends Fragment {
     private void callConfigActivity(){
         Intent it = new Intent(this.getContext(), ConfigFragment.class);
         startActivity(it);
+    }
+
+    private int getListasCount(SQLiteDatabase database){
+        Cursor cursorListas;
+
+        cursorListas = database.query("lista", null, null, null, null, null, null);
+
+        return cursorListas.getCount();
     }
 }

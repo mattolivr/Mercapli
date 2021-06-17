@@ -17,6 +17,7 @@ import sp.senai.br.mercapli.classes.Meta;
 import sp.senai.br.mercapli.exceptions.MetaException;
 import sp.senai.br.mercapli.exceptions.MetaInputException;
 
+import static sp.senai.br.mercapli.GlobalVariables.GASTO_TOTAL;
 import static sp.senai.br.mercapli.GlobalVariables.META_GASTOS;
 
 public class MetaDialog extends DialogFragment {
@@ -40,6 +41,7 @@ public class MetaDialog extends DialogFragment {
         btCancelar.setOnClickListener(cancelar -> this.dismiss());
         btEnviar.setOnClickListener(enviar -> {
 
+            META_GASTOS.setGastoTotal(GASTO_TOTAL);
             META_GASTOS.salvarMeta(database);
 
             try {

@@ -67,12 +67,9 @@ public class ListaActivity extends AppCompatActivity {
         pbMeta         = new ProgressBarMeta(findViewById(R.id.pbListaViewMeta));
         database       = new CriarBD(getApplicationContext()).getWritableDatabase();
         adapter        = new ItemAdapter(this, this.getSupportFragmentManager(), ITEM_LISTA);
-        layoutManager  = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        layoutManager  = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, true);
 
-        recyclerListener = holder -> {
-            atualizarProgressoMeta();
-
-        };
+        recyclerListener = holder -> atualizarProgressoMeta();
 
         rvItens.setAdapter(adapter);
         rvItens.setLayoutManager(layoutManager);
