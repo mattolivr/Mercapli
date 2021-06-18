@@ -218,7 +218,7 @@ public abstract class Mercado {
                     database.delete("item", this.getTable() + "_id_fk = " + this.getId(), null);
                 }
             }
-        } else {
+        } else if (cursorCompras.getCount() > 1) {
             throw new MercadoException("Um erro ocorreu");
         }
     }

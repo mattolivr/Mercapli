@@ -76,7 +76,7 @@ public class HistoricoAdapter extends RecyclerView.Adapter {
         if(cursorMetas.getCount() > 0){
             resetMetas();
             for (cursorMetas.moveToFirst(); !cursorMetas.isAfterLast(); cursorMetas.moveToNext()){
-                if(cursorMetas.getPosition() == 1) continue;
+//                if(cursorMetas.getPosition() == 1) continue;
                 Meta newMeta = new Meta(
                         cursorMetas.getDouble(cursorMetas.getColumnIndexOrThrow("meta_valor")),
                         cursorMetas.getDouble(cursorMetas.getColumnIndexOrThrow("meta_gasto")),

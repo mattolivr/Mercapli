@@ -34,6 +34,7 @@ public class CarrinhoSaveDialog extends DialogFragment {
                         compra.finalizar(database);
                         lista.deletar(database);
                         getActivity().onBackPressed();
+
                     }
                     catch (MercadoException e){
                         Toast.makeText(getActivity(), e.toString(), Toast.LENGTH_SHORT).show();
